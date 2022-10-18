@@ -1,2 +1,2 @@
-#**KORERO.IO**
+#KORERO.IO
 ##By TeamKorero
