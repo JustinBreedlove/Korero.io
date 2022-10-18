@@ -1,0 +1,8 @@
+/*/node_modules
+/node_modules
+
+!/.gitignore
+!/README.md
+!/api
+!/client
+!/db_config
