@@ -8,10 +8,11 @@ export const NavButton = ({ text, goto }) => {
 		display: flex;
 
 		background-color: ${Color.Primary};
-		color: ${Color.Accent};
+		color: ${Color.Accent2};
 
 		border: none;
 		width: auto;
+        height: min(100% - 25px);
 		padding: 10px;
 
 		&:focus,
@@ -32,7 +33,7 @@ export const NavButton = ({ text, goto }) => {
 		-webkit-user-select: none;
 
 		&:hover {
-			background-color: ${Color.Secondary};
+			background-color: ${Color.Accent2};
 			color: ${Color.Primary};
 			transition-duration: 250ms;
 		}
