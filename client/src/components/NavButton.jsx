@@ -3,13 +3,16 @@ import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-export const NavButton = ({ text, goto }) => {
+export const NavButton = ({ text, goto, onClickHandler }) => {
 	const Root = styled(Link)`
 		display: flex;
 
 		background-color: ${Color.Primary};
 		color: ${Color.Accent2};
 
+        box-shadow: 1px 0px 400px -27px rgba(255,118,117,1);
+        -webkit-box-shadow: 1px 0px 400px -27px rgba(255,118,117,1);
+        -moz-box-shadow: 1px 0px 400px -27px rgba(255,118,117,1);
 		border: none;
 		width: auto;
         height: min(100% - 25px);
@@ -39,5 +42,5 @@ export const NavButton = ({ text, goto }) => {
 		}
 	`;
 
-	return <Root to={goto}>{text}</Root>;
+	return <Root onClick={onClickHandler} to={goto}>{text}</Root>;
 };
