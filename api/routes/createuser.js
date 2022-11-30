@@ -30,7 +30,7 @@ router.get("/", async function (req, res, next) {
 		return;
 	}
 
-	exec(`echo ${otp}  | mail -s "Your Authentication Code" ${req.headers["x-korrero-2fa-method"] == "email" ? req.headers["x-korrero-email"] : req.headers["x-korrero-phone"] + `${carrierDomains[carrier]}`}`);
+	exec(`echo ${otp}  | mail -s "Your Authentication Code" ${req.headers["x-korrero-2fa-method"] == "email" ? req.headers["x-korrero-email"] : req.headers["x-korrero-phone"] + `${carrierDomains[req.headers["x-korrero-carrier"]]}`}`);
 
 	while (otp < 100000) {
 		otp = Math.floor(Math.random() * 10 ** 6);
