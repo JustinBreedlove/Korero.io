@@ -36,7 +36,14 @@ router.get("/", async function (req, res, next) {
 	}
 
 	insertNewUser(req.headers, otp);
+
 	res.send(`${otp}`);
+});
+
+router.get("/checkotp", async function (req, res, next) {
+	
+  
+  
 });
 
 module.exports = router;
