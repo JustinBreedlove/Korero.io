@@ -5,11 +5,11 @@ var exec = require("child_process");
 
 var router = express.Router();
 
-const sanitizeEmail = (email) => {
+const isEmailSanitized = (email) => {
 	return true;
 };
 
-const sanitizePhone = (phone) => {
+const isPhoneSanitized = (phone) => {
 	return true;
 };
 
@@ -25,7 +25,7 @@ router.get("/", async function (req, res, next) {
 
 	var otp = Math.floor(Math.random() * 10 ** 6);
 
-	if (!sanitizePhone(req.headers["x-korrero-phone"]) || !sanitizeEmail(req.headers["x-korrero-email"]) /*|| doesUserExist*/ || carrierDomains[req.headers["x-korrero-carrier"]]) {
+	if (sanitizePhone(req.headers["x-korrero-phone"]) || sanitizeEmail(req.headers["x-korrero-email"]) /*|| doesUserExist*/ || carrierDomains[req.headers["x-korrero-carrier"]]) {
 		res.send("Failure");
 		return;
 	}
