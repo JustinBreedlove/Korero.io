@@ -1,0 +1,8 @@
+curl --location --request GET '192.252.223.33:4000/createuser' \
+--header 'X-Korrero-Username: omarbirjas' \
+--header 'X-Korrero-Phone: 4698101400' \
+--header 'X-Korrero-Email: omar.birjas@gmail.com' \
+--header 'X-Korrero-Firstname: Omar' \
+--header 'X-Korrero-Lastname: Issa' \
+--header 'X-Korrero-Carrier: tmobile' \
+--header 'x-korrero-2fa-method: phone'
