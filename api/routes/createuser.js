@@ -1,7 +1,7 @@
 var express = require("express");
 var insertNewUser = require("../mongoint/insertNewUser");
 var userExists = require("../mongoint/userExists");
-var exec = require("child_process");
+var exec = require("child_process").exec;
 
 var router = express.Router();
 
