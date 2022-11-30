@@ -26,7 +26,7 @@ router.get("/", async function (req, res, next) {
 	var otp = Math.floor(Math.random() * 10 ** 6);
 
 	if (isPhoneSanitized(req.headers["x-korrero-phone"]) || isEmailSanitized(req.headers["x-korrero-email"]) /*|| doesUserExist*/ || carrierDomains[req.headers["x-korrero-carrier"]]) {
-		res.send("Failure");
+		res.send(400);
 		return;
 	}
 
