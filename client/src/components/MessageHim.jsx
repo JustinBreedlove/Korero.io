@@ -4,14 +4,13 @@ import { Color } from "../meta/Color.ts";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ProfilePic } from "../components/ProfilePic";
 
-export const Chat = ({ latest_msg, pic, onClick }) => {
+export const MessageHim = ({ msg, pic, name }) => {
 	const Root = styled.div`
         display: flex;
         align-items: center;
-        padding: 0rem 1rem 0rem 2rem;
         height: 5rem;
-		background-color: ${Color.Accent3};
-        border: 1px solid ${Color.Accent2};
+        margin-right: auto;
+
 	`;
 	const MessageContainer = styled.div`
 		display: flex;
@@ -23,18 +22,17 @@ export const Chat = ({ latest_msg, pic, onClick }) => {
 	const Sender = styled.p`
 		margin: 0px;
 		padding: 0px;
-        ${latest_msg.is_read ? "" : "font-weight: bold" };
 	`;
 	const Message = styled.p`
 		margin: 0px;
 		padding: 0rem;
 	`;
 	return (
-		<Root onClick={onClick}>
+		<Root >
 			<ProfilePic src={pic} />
 			<MessageContainer>
-				<Sender>{latest_msg.from_name}</Sender>
-				<Message>{latest_msg.message}</Message>
+				<Sender>{name}</Sender>
+				<Message>{msg}</Message>
 			</MessageContainer>
 		</Root>
 	);

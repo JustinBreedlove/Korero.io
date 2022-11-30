@@ -13,9 +13,10 @@ import { Settings } from "./views/Settings";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Color } from "./meta/Color.ts";
+import io from 'socket.io-client';
 
 const App = () => {
-	const [isAuthed, setIsAuthed] = useState(true);
+	const [isAuthed, setIsAuthed] = useState(false);
 	const [userInfo, setUserInfo] = useState({});
 
 	useEffect(() => {});
@@ -32,9 +33,9 @@ const App = () => {
 		width: min(100% - 4rem, 70%);
     height: min(100% - 4rem);
 		margin-inline: auto;
-		box-shadow: 1px 0px 129px 27px rgba(255, 118, 117, 1);
-		-webkit-box-shadow: 1px 0px 129px 27px rgba(255, 118, 117, 1);
-		-moz-box-shadow: 1px 0px 129px 27px rgba(255, 118, 117, 1);
+		box-shadow: 1px 0px 129px 27px rgb(153,153,153);
+		-webkit-box-shadow: 1px 0px 129px 27px rgb(153,153,153);
+		-moz-box-shadow: 1px 0px 129px 27px rgb(153,153,153);
 	`;
 	const Buttons = styled.div`
 		display: flex;
