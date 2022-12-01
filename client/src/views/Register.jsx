@@ -6,6 +6,8 @@ import { Divider } from "../components/Divider";
 import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
+import { Select } from "../components/Select";
+import { Option } from "../components/Option";
 
 export const Register = () => {
 	let username = "";
@@ -21,6 +23,9 @@ export const Register = () => {
 
 	const onClickLoginHandler = () => {
 		console.log(username, password);
+	};
+	const onChangeCarrierHandler = (e) => {
+		console.log(e.target.value)
 	};
 
 	const Root = styled.div`
@@ -46,6 +51,26 @@ export const Register = () => {
 		flex-direction: row;
 		width: max(100% - 3rem);
 	`;
+
+	const carrierOptions = 
+	[
+		<Option val = 'Verizon'/>,
+		<Option val = 'ATT'/>,
+		<Option val = 'TMobile'/>,
+		<Option val = 'Sprint'/>,
+
+
+
+	]
+
+	/**
+	 * #TODO: Add a preferred method for 2fa (phone or email)
+	 * #TODO: Send data to backend using /createuser endpoint
+	 * #TODO: Redirect user to OTP verification after submitting form and
+	 * 			verifying the 2XX response code from /createuser
+	 * #TODO: Handle 4XX/5XX response codes from /createuser
+	 * #TODO: Carrier dropdown instead of input
+	 */
 	return (
 		<Root>
 			<Container>
@@ -61,7 +86,7 @@ export const Register = () => {
 				</InputContainer>
 				<InputContainer>
 					<Input onChangeHandler={onChangeUsernameHandler} text={"Username"} />
-					<Input onChangeHandler={onChangePasswordHandler} text={"Carrier"} />
+					<Select onChangeHandler={onChangeCarrierHandler} options = {carrierOptions} text={"Carrier"} />
 				</InputContainer>
                 <InputContainer>
 					<Input onChangeHandler={onChangeUsernameHandler} type =  {"password"} text={"Password"} />
