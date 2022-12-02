@@ -40,5 +40,12 @@
       "last 1 safari version"
     ]
   },
+<<<<<<< HEAD
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.45.0",
+    "typescript": "^4.9.3"
+  }
+=======
   "proxy": "http://localhost:4000"
+>>>>>>> 64b73d9e5e1d447cd3647ca63cfced45a1fe58f3
 }
