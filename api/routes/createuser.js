@@ -1,17 +1,18 @@
 var express = require("express");
+const { mongo } = require("../mongoint/connect");
 var insertNewUser = require("../mongoint/insertNewUser");
 var userExists = require("../mongoint/userExists");
 var exec = require("child_process").exec;
 
 var router = express.Router();
 
-const isEmailSanitized = (email) => {
-  var allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!$%^&*_=+}{?-.'
-  var containsAt = email.split("@").length == 2
-  var containsTopLevelDomain = email.split("@")[1].split(".").length >= 2
+const isEmailSanitary = (email) => {
+  const allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!$%^&*_=+}{?-.'
+  const containsAt = (email.split("@").length == 2)
+  const containsTopLevelDomain = (email.split("@")[1].split(".").length >= 2)
   var containsDisallowedChars = false;
   
-  email.forEach((char, index) =>
+  email.split("").forEach((char, index) =>
   {
     if (!allowedChars.includes(char)) containsDisallowedChars = true
   })
@@ -19,12 +20,19 @@ const isEmailSanitized = (email) => {
 	return containsAt && containsTopLevelDomain && !containsDisallowedChars;
 };
 
-const isPhoneSanitized = (phone) => {
-  var isDigits = phone.match(/^[0-9]+$/) != null;
-  var isAmerican = phone.length == 10
+const isPhoneSanitary = (phone) => {
+  const isDigits = (phone.match(/^[0-9]+$/) != null)
+  const isAmerican = (phone.length == 10)
 	return isDigits && isAmerican;
 };
 
+isOTPSanitary = (otp) =>
+{
+	const isDigits = (otp.match(/^[0-9]+$/) != null)
+	const is6Long = (otp.length == 6)
+
+	return isDigits && is6Long;
+}
 const carrierDomains = {
 	tmobile: "tmomail.net",
 	sprint: "messaging.sprintpcs.com",
@@ -41,7 +49,7 @@ router.get("/", async function (req, res, next) {
 		otp = Math.floor(Math.random() * 10 ** 6);
 	}
 	
-  if (!isPhoneSanitized(`${req.headers["x-korrero-phone"]}`) || !isEmailSanitized(req.headers["x-korrero-email"]) /*|| doesUserExist*/ || !carrierDomains[req.headers["x-korrero-carrier"]]) {
+  if (!isPhoneSanitary(`${req.headers["x-korrero-phone"]}`) || !isEmailSanitary(req.headers["x-korrero-email"]) /*|| doesUserExist*/ || !carrierDomains[req.headers["x-korrero-carrier"]]) {
 		res.send(400);
 		return;
 	}
@@ -56,9 +64,16 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/checkotp", async function (req, res, next) {
-	
+	const database = mongo.db('korrero')
+    const unvalidated_users = database.collection('unvalidated_users')
   
-  
+	if (!isOTPSanitary(req.headers['x-korrero-otp'])) {
+		res.send(400)
+		return
+	}	
+
+	console.log(unvalidated_users.findOneAndDelete({"otp" : req.headers['x-korrero-otp']}))
+
 });
 
 module.exports = router;

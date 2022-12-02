@@ -6,7 +6,6 @@ const insertNewUser = (headers, otp) =>
 
     const database = mongo.db('korrero')
     const unvalidated_users = database.collection('unvalidated_users')
-
     const unvalidated_user = unvalidated_users.insertOne({
         "userid": `${userid}`,
         "username": headers['x-korrero-username'],
