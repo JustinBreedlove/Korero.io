@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');
 var sendmessageRouter = require('./routes/sendmessage');
 var usersRouter = require('./routes/users');
 var createUserRouter = require('./routes/createuser');
+var sessionRouter = require('./routes/session');
+
 
 
 
@@ -27,6 +29,8 @@ app.use('/users', usersRouter);
 app.use('/sendmessage', sendmessageRouter);
 app.use('/createuser', createUserRouter);
 app.use('/live', liveRouter);
+app.use('/session', sessionRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
