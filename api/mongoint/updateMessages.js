@@ -1,25 +1,32 @@
-var mongo = require('./connect');
-const validateSession = require('./validateSession');
-const updateMessages = async (chatid, headers, sessionid) =>
-{
-	const isSessionValid = await validateSession(headers['x-korrero-username'], sessionid);
-    
-    if(!isSessionValid) return false;
-
-    const database = mongo.db("korrero");
+var mongo = require("./connect");
+const validateSession = require("./validateSession");
+const updateMessages = async (chatid, sender, msg) => {
+	const database = mongo.db("korrero");
 	const messages = database.collection("messages");
 
-    const chat = await messages.findOne({"chatid" : chatid})
-   
-    if (chat != null)
-    {
-        const m = chat.messages
-        const updatedMessage = messages.findOneAndUpdate({"chatid" : chatid}, { $set: { "messages.$": headers['x-korrero-msg'] } })
-        console.log(updateMessages)
-        return messageUpdated.value
-    }
-   
-    return false;
-}
+	const chat = await messages.findOne({ chatid: chatid });
+	console.log(chat);
 
-module.exports = updateMessages
+	if (chat != null) {
+		const m = chat.messages;
+		const updatedMessage = messages.findOneAndUpdate(
+			{ chatid: chatid },
+			{
+				"$push": {
+					"messages": {
+						sender: sender.userid,
+						name: sender.name_short, // shortname
+						message: msg,
+						isread: 0,
+						ts: Date.now()
+					}
+				}
+			}
+		);
+		return updatedMessage != null
+	}
+
+	return false;
+};
+
+module.exports = updateMessages;

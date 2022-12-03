@@ -36,8 +36,8 @@ router.get("/send", async function (req, res, next) {
         res.send(403)
         return false
     }
-    
-    const wasMessageSent = await updateMessages(req.headers['x-korrero-chatid'], req.headers, req.cookies['sessionid'])
+    const sender = await getUserInfo(req.cookies['userid'])
+    const wasMessageSent = await updateMessages(req.headers['x-korrero-chatid'],  sender, req.headers['x-korrero-msg'])
     
     res.send(wasMessageSent ? 200 : 500)
 });
