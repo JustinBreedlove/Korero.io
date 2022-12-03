@@ -10,13 +10,12 @@ const createSession = async (username, password) =>
     const shadow = database.collection('shadow')
     const shadowEntry = await shadow.findOne({"username": username})
 
-    console.log(shadowEntry)
     const currentHash = crypto.createHash('sha256').update(`${password}${shadowEntry.salt}`).digest('hex');
     
-
     if (shadowEntry.hash ==  currentHash)
     {
-        return await sessions.insertOne({"username": username, "sessionid": sessionid})
+        await sessions.insertOne({"username": username, "sessionid": sessionid})
+        return sessionid
     }
     else
     {
