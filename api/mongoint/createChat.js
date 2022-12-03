@@ -4,19 +4,36 @@ const validateSession = require("./validateSession");
 const getUserInfo = require("./getUserInfo");
 
 const createChat = async (user1, user2, msg, sessionid) => {
-
-
-
 	const chatid = crypto.createHash("sha256").update(`${user1.userid}${user2.userid}`).digest("hex");
 
 	const database = mongo.db("korrero");
 	const messages = database.collection("messages");
 
-	const chatroom = await messages.findOne({ chatid: chatid });
+	const chat = await messages.findOne({ chatid: chatid });
 
-    console.log(user1, user2)
 
-	if (chatroom == null) {
+	if (chat == null) {
+	    const users = database.collection("users");
+
+        users.findOneAndUpdate(
+            { userid: user1.userid },
+            {
+                $push: {
+                    chats: chatid
+                }
+            }
+        );
+    
+        users.findOneAndUpdate(
+            { userid: user2.userid },
+            {
+                $push: {
+                    chats: chatid
+                }
+            }
+        );
+
+        
 		messages.insertOne({
 			chatid: chatid,
 			userid1: user1.userid,
@@ -33,8 +50,8 @@ const createChat = async (user1, user2, msg, sessionid) => {
 		});
 		return chatid;
 	}
-    console.log(chatid)
-	return false;
+
+	return chat != null ? 400 : 500
 };
 
 module.exports = createChat;
