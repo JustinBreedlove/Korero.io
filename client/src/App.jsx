@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Cookies from 'js-cookie'
 
 import { ProfilePic } from "./components/ProfilePic";
 import { NavBar } from "./components/NavBar";
@@ -56,7 +57,11 @@ const App = () => {
 				setIsLoading(false);
 				setIs500(true);
 			}
-			console.log(isLoading, is500, res.status);
+			console.log(Cookies.get('sessionid'))
+			if(Cookies.get('sessionid'))
+			{
+				setIsAuthed(true)
+			}
 		});
 	}, [isLoading, is500]);
 	return (

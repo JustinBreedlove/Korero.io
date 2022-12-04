@@ -16,7 +16,6 @@ export const ActiveChat = ({ onClick, msg }) => {
         height: 100%;
 	`;
 
-    console.log(msg)
 	return <Root onClick={onClick}>{msg.messages.map((currentMessage) => {
 
         if (currentMessage.who == "me")

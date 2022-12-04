@@ -20,7 +20,13 @@ export const Login = () => {
 	};
 
 	const onClickLoginHandler = () => {
-		console.log(username, password);
+		fetch("/session/login" ,{headers : {'x-korrero-username': username, 'x-korrero-password' : password}}).then( res =>
+			{
+				if (res.ok)
+				{
+				}
+				window.location.replace("http://localhost:3000/inbox")
+			})
 	};
 
 	const Root = styled.div`

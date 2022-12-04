@@ -2,9 +2,8 @@
 ## By TeamKorero
 
 #TODO - Omar
-    - Added frontend support for creating a user, reference createuser.curl
+    - Fix updateMessages and /chat/send
     - Redirect frontend to otp page
-    - Backend should accept otp check
 
 
 Dev Requirements:
