@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const NavButton = ({ text, goto, onClickHandler }) => {
 	const Root = styled(Link)`

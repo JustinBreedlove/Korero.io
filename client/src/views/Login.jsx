@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
@@ -22,8 +22,9 @@ export const Login = () => {
 	const onClickLoginHandler = () => {
 		fetch("/session/login" ,{headers : {'x-korrero-username': username, 'x-korrero-password' : password}}).then( res =>
 			{
-				if (res.ok)
+				if (!res.ok)
 				{
+
 				}
 				window.location.replace("http://localhost:3000/inbox")
 			})

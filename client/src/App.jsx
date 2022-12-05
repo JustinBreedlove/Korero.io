@@ -12,16 +12,14 @@ import { Login } from "./views/Login";
 import { Register } from "./views/Register";
 import { Settings } from "./views/Settings";
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Color } from "./meta/Color.ts";
-import io from "socket.io-client";
 
 const App = () => {
 	const [isAuthed, setIsAuthed] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [is500, setIs500] = useState(false);
 
-	const [userInfo, setUserInfo] = useState({});
 
 	useEffect(() => {});
 	const Root = styled.div`
@@ -86,12 +84,10 @@ const App = () => {
 												<NavButton goto="/settings" text={"Settings"} />
 												<NavButton
 													onClickHandler={() => {
-														{
 															fetch("/session/logout");
 															setIsAuthed(false);
 															window.location.replace("http://localhost:3000/login")
 
-														}
 													}}
 													goto="/logout"
 													text={"Logout"}

@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { ProfilePic } from "../components/ProfilePic";
 import { MessageMe } from "../components/MessageMe";
 import { MessageHim } from "../components/MessageHim";
 import Cookies from 'js-cookie'

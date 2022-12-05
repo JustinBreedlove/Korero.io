@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocalStorage } from "usehooks-ts";
 import styled from "styled-components";
 import { Chat } from "../containers/Chat";
 import { ActiveChat } from "../containers/ActiveChat";
@@ -11,7 +10,6 @@ import { Color } from "../meta/Color.ts";
 
 export const Inbox = () => {
 	const chats = useRef([]);
-	// const [messages, setMessages] = useLocalStorage("korero_msgs", []);
 	const [isLoading, setIsLoading] = useState(true);
 	const [activeChat, setActiveChat] = useState(null);
 	const [activeChatId, setActiveChatId] = useState(null);

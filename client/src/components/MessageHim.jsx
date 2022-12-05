@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ProfilePic } from "../components/ProfilePic";
 
 export const MessageHim = ({ msg, pic, name }) => {
