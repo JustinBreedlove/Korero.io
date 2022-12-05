@@ -11,6 +11,9 @@ export const MessageMe = ({ msg, pic, name }) => {
         padding: 0rem 1rem 0rem 2rem;
         height: 5rem;
         margin-left: auto;
+		background-color: ${Color.Accent3};
+		border-radius: 10px;
+		margin-top: 1rem;
 
 	`;
 	const MessageContainer = styled.div`

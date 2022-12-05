@@ -10,6 +10,9 @@ export const MessageHim = ({ msg, pic, name }) => {
         align-items: center;
         height: 5rem;
         margin-right: auto;
+		background-color: ${Color.Accent4};
+		border-radius: 10px;
+		margin-top: 1rem;
 
 	`;
 	const MessageContainer = styled.div`

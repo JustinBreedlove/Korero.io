@@ -1,16 +1,16 @@
 var mongo = require("./connect");
-var crypto = require("crypto");
 const createSession = async (userid) => {
 	const database = mongo.db("korrero");
 	const users = database.collection("users");
 	const messages = database.collection("messages");
 
-	const chatids = (await users.findOne({ userid: userid })).chats;
+	const chatids = (await users.findOne({ userid: userid }));
 
 	if (!chatids) {
+        return
 	}
-
-	const cursor = messages.find({ chatid: { $in: chatids } });
+    
+	const cursor = messages.find({ chatid: { $in: chatids.chats } });
 	var chats = [];
 	await cursor.forEach((chat) => {
 		chats.push(chat);

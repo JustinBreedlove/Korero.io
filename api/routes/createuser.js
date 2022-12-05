@@ -65,7 +65,7 @@ router.get("/checkotp", async function (req, res, next) {
 	const validated = await validateUser(req.headers)
 
 
-	res.send(validated.acknowledged ? 200 : 500)
+	res.send(validated ? 200 : 500)
 });
 
 module.exports = router;

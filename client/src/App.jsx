@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 import { ProfilePic } from "./components/ProfilePic";
 import { NavBar } from "./components/NavBar";
@@ -57,8 +57,10 @@ const App = () => {
 				setIsLoading(false);
 				setIs500(true);
 			}
-			console.log(Cookies.get('sessionid'))
-			if(Cookies.get('sessionid'))
+			if (Cookies.get("sessionid") == 0) {
+				setIsAuthed(false);
+			}
+			else
 			{
 				setIsAuthed(true)
 			}
@@ -77,12 +79,23 @@ const App = () => {
 							children={
 								isAuthed
 									? [
-											<ProfilePic />,
+											<ProfilePic src={Cookies.get("userid")} />,
 											<Spacer size={3} />,
 											<Buttons>
 												<NavButton goto="/inbox" text={"Inbox"} />
 												<NavButton goto="/settings" text={"Settings"} />
-												<NavButton onClickHandler={() => setIsAuthed(false)} goto="/logout" text={"Logout"} />
+												<NavButton
+													onClickHandler={() => {
+														{
+															fetch("/session/logout");
+															setIsAuthed(false);
+															window.location.replace("http://localhost:3000/login")
+
+														}
+													}}
+													goto="/logout"
+													text={"Logout"}
+												/>
 											</Buttons>
 									  ]
 									: [<NavBarHeader>Korero.io</NavBarHeader>]

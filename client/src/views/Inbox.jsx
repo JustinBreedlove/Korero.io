@@ -7,27 +7,25 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Color } from "../meta/Color.ts";
 
-
 //TODO: Add user functionality to start a new chat
-
 
 export const Inbox = () => {
 	const chats = useRef([]);
 	// const [messages, setMessages] = useLocalStorage("korero_msgs", []);
 	const [isLoading, setIsLoading] = useState(true);
-	const [activeChat, setActiveChat] = useState("");
-	const [focusedChat, setFocusedChat] = useState(null);
+	const [activeChat, setActiveChat] = useState(null);
+	const [activeChatId, setActiveChatId] = useState(null);
 
-
+	let messageDraft = null
 	useEffect(() => {
-		
-		fetch("/chat/get").then(res => res.json()).then((res) =>
-		{
-			chats.current = res
-			setIsLoading(false)
-		})
+		fetch("/chat/get")
+			.then((res) => res.json())
+			.then((res) => {
+				chats.current = res;
+				setIsLoading(false);
+			});
 
-		// setMessages([messages[0],...messages]);
+
 	}, []);
 
 	const Root = styled.div`
@@ -48,49 +46,47 @@ export const Inbox = () => {
 		width: 100%;
 	`;
 	const ComposeMessage = styled.div`
-        display:flex;
-        align-items: center;
-        padding: 10px;
-        position: sticky;
-        bottom: 0px;
-        background-color: ${Color.Primary};
-    `;
+		display: flex;
+		align-items: center;
+		padding: 10px;
+		position: sticky;
+		bottom: 0px;
+		background-color: ${Color.Primary};
+	`;
 
 	const onChangeMessageDraft = (e) => {
-		// messageDraft = e.target.value;
+		messageDraft = e.target.value;
+	};
+	const onClickSendHandler = (e) => {
+		fetch('/chat/send', {headers: {'x-korrero-chatid': activeChatId, 'x-korrero-msg' : messageDraft}})
 	};
 	return (
 		<Root>
 			<ChatsContainer>
 				{!isLoading
 					? chats.current.map((chat) => {
-							console.log(chat)
-						return	(<Chat
-								onClick={() => {
-									setActiveChat(chat.chatid);
-								}}
-								latest_msg={chat.messages[0].message}
-								pic={"msg.his_b64_pfp"}></Chat>
-					  )})
+							return (
+								<Chat
+									onClick={() => {
+										
+										setActiveChat(<ActiveChat chat = {chat}/>)
+										setActiveChatId(chat.chatid)
+									}}
+									message={chat.messages[0]}
+									userid1={chat.userid1}
+									userid2={chat.userid2}
+								/>
+							);
+					  })
 					: []}
-					{chats.current.map((chat) => {
-							console.log(chat)
-						return	(<Chat
-								onClick={() => {
-									setActiveChat(chat.chatid);
-								}}
-								latest_msg={chat.messages[0].message}
-								pic={"msg.his_b64_pfp"}></Chat>
-					  )})}
 			</ChatsContainer>
 			<FocusedChat>
-				{focusedChat}
+				{activeChat}
 				<ComposeMessage>
 					<Input onChangeHandler={onChangeMessageDraft} text={"Message"} />
-                    <Button text={"Send"} type={"secondary"} />
+					<Button text={"Send"} type={"secondary"} onClickHandler = {onClickSendHandler}/>
 				</ComposeMessage>
 			</FocusedChat>
 		</Root>
 	);
-	// return (<div>TEST</div>)
 };

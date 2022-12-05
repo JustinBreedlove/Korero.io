@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 export const Header3 = ({text}) => {
 	const Root = styled.h2`
-    text-align: center;
+   	 	text-align: center;
 
 	`;
 
