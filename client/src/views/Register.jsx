@@ -132,10 +132,10 @@ export const Register = () => {
 					<Input onChangeHandler={onChangeUsernameHandler} type =  {"radio"} text={"Password"} value = {"Email"}/>
 
 				</InputContainer> */}
-				<Button goto={"/login"} text={"Login"} type={"primary"} />
-				<Divider size={1} />
-
 				<Button onClickHandler={onClickRegisterHandler} goto={"/register"} text={"Register"} type={"secondary"} />
+				<Divider size={1} />
+				<Button goto={"/login"} text={"Login"} type={"primary"} />
+
 			</Container>
 		</Root>
 	);
