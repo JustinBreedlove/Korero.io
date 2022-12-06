@@ -4,6 +4,10 @@ import { Color } from "../meta/Color.ts";
 import { ProfilePic } from "../components/ProfilePic";
 
 export const Chat = ({ message, userid1, userid2, onClick }) => {
+	if (!message)
+	{
+		message = ""
+	}
 	const Root = styled.div`
         display: flex;
         align-items: center;

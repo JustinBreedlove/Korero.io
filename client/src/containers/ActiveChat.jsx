@@ -14,7 +14,6 @@ export const ActiveChat = ({ onClick, chat }) => {
         height: 100%;
 	`;
 
-    console.log(chat)
 	return <Root onClick={onClick}>{chat.messages.map((chatinfo) => {
 
         if (chatinfo.sender == Cookies.get('userid'))

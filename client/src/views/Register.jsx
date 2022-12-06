@@ -10,22 +10,65 @@ import { Select } from "../components/Select";
 import { Option } from "../components/Option";
 
 export const Register = () => {
+	let firstname = "";
+	let lastname = "";
+	let email = "";
+	let phone = "";
 	let username = "";
-	let password = "";
+	let carrier = "verizon";
+	let password1 = "";
+	let password2 = "";
 
+	const onChangeFirstNameHandler = (e) => {
+		firstname = e.target.value;
+	};
+	const onChangeLastNameHandler = (e) => {
+		lastname = e.target.value;
+	};
+	const onChangeEmailHandler = (e) => {
+		email = e.target.value;
+	};
+	const onChangePhoneHandler = (e) => {
+		phone = e.target.value;
+	};
 	const onChangeUsernameHandler = (e) => {
 		username = e.target.value;
 	};
-
-	const onChangePasswordHandler = (e) => {
-		password = e.target.value;
-	};
-
-	const onClickLoginHandler = () => {
-		console.log(username, password);
-	};
 	const onChangeCarrierHandler = (e) => {
-		console.log(e.target.value)
+		carrier = e.target.value;
+	};
+	const onChangePassword1Handler = (e) => {
+		password1 = e.target.value;
+	};
+	const onChangePassword2Handler = (e) => {
+		password2 = e.target.value;
+	};
+
+	const onClickRegisterHandler = () => {
+		if (password1 != password2) return;
+		fetch("/createuser", {
+			headers: {
+				"x-korrero-username": username,
+				"x-korrero-phone": phone,
+				"x-korrero-email": email,
+				"x-korrero-firstname": firstname,
+				"x-korrero-lastname": lastname,
+				"x-korrero-carrier": carrier,
+				"x-korrero-2fa-method": phone,
+				"x-korrero-password": password1 == password2 ? password1 : ""
+			}
+		});
+		console.log({
+			"x-korrero-username": username,
+			"x-korrero-phone": phone,
+			"x-korrero-email": email,
+			"x-korrero-firstname": firstname,
+			"x-korrero-lastname": lastname,
+			"x-korrero-carrier": carrier,
+			"x-korrero-2fa-method": phone,
+			"x-korrero-password": password1 == password2 ? password1 : ""
+		})
+
 	};
 
 	const Root = styled.div`
@@ -52,16 +95,7 @@ export const Register = () => {
 		width: max(100% - 3rem);
 	`;
 
-	const carrierOptions = 
-	[
-		<Option val = 'Verizon'/>,
-		<Option val = 'ATT'/>,
-		<Option val = 'TMobile'/>,
-		<Option val = 'Sprint'/>,
-
-
-
-	]
+	const carrierOptions = [<Option val="Verizon" />, <Option val="ATT" />, <Option val="TMobile" />, <Option val="Sprint" />];
 
 	/**
 	 * #TODO: Add a preferred method for 2fa (phone or email)
@@ -69,7 +103,6 @@ export const Register = () => {
 	 * #TODO: Redirect user to OTP verification after submitting form and
 	 * 			verifying the 2XX response code from /createuser
 	 * #TODO: Handle 4XX/5XX response codes from /createuser
-	 * #TODO: Carrier dropdown instead of input
 	 */
 	return (
 		<Root>
@@ -77,26 +110,32 @@ export const Register = () => {
 				<Header1 text={"Welcome to Korero"} />
 				<Header3 text={"where your privacy matters"} />
 				<InputContainer>
-					<Input text={"First name"} />
-					<Input text={"Last name"} />
+					<Input onChangeHandler={onChangeFirstNameHandler} text={"First name"} />
+					<Input onChangeHandler={onChangeLastNameHandler} text={"Last name"} />
 				</InputContainer>
 				<InputContainer>
-					<Input text={"Email"} />
-					<Input text={"Phone Number"} />
+					<Input onChangeHandler={onChangeEmailHandler} text={"Email"} />
+					<Input onChangeHandler={onChangePhoneHandler} text={"Phone Number"} />
 				</InputContainer>
 				<InputContainer>
 					<Input onChangeHandler={onChangeUsernameHandler} text={"Username"} />
-					<Select onChangeHandler={onChangeCarrierHandler} options = {carrierOptions} text={"Carrier"} />
+					<Select onChangeHandler={onChangeCarrierHandler} options={carrierOptions} text={"Carrier"} />
 				</InputContainer>
-                <InputContainer>
-					<Input onChangeHandler={onChangeUsernameHandler} type =  {"password"} text={"Password"} />
-					<Input onChangeHandler={onChangePasswordHandler} type =  {"password"} text={"Confirm Password"} />
+				<InputContainer>
+					<Input onChangeHandler={onChangePassword1Handler} type={"password"} text={"Password"} />
+					<Input onChangeHandler={onChangePassword2Handler} type={"password"} text={"Confirm Password"} />
 				</InputContainer>
+				{/** For 2FA implementation using phone number */}
+				{/* <InputContainer>
+				<p><b>Preferred 2FA Method:</b></p>
+					<Input onChangeHandler={onChangeUsernameHandler} type =  {"radio"} text={"Password"} value = {"Phone"}/>
+					<Input onChangeHandler={onChangeUsernameHandler} type =  {"radio"} text={"Password"} value = {"Email"}/>
 
-				<Button onClickHandler={onClickLoginHandler} text={"Login"} type={"primary"} />
+				</InputContainer> */}
+				<Button goto={"/login"} text={"Login"} type={"primary"} />
 				<Divider size={1} />
 
-				<Button goto={"/register"} text={"Register"} type={"secondary"} />
+				<Button onClickHandler={onClickRegisterHandler} goto={"/register"} text={"Register"} type={"secondary"} />
 			</Container>
 		</Root>
 	);

@@ -1,5 +1,5 @@
 var mongo = require("./connect");
-const createSession = async (userid) => {
+const getChats = async (userid) => {
 	const database = mongo.db("korrero");
 	const users = database.collection("users");
 	const messages = database.collection("messages");
@@ -18,4 +18,4 @@ const createSession = async (userid) => {
 	return chats;
 };
 
-module.exports = createSession;
+module.exports = getChats;

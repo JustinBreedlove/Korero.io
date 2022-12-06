@@ -14,6 +14,8 @@ import { Settings } from "./views/Settings";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Color } from "./meta/Color.ts";
+import { Header1 } from "./components/Header1";
+import { Header3 } from "./components/Header3";
 
 const App = () => {
 	const [isAuthed, setIsAuthed] = useState(false);
@@ -48,6 +50,7 @@ const App = () => {
 	const NavBarHeader = styled.div``;
 
 	useEffect(() => {
+
 		fetch("/live").then((res) => {
 			if (res.status >= 200 && res.status <= 299) {
 				setIsLoading(false);
@@ -63,7 +66,7 @@ const App = () => {
 				setIsAuthed(true)
 			}
 		});
-	}, [isLoading, is500]);
+	}, []);
 	return (
 		<Root>
 			{isLoading ? (
@@ -77,8 +80,10 @@ const App = () => {
 							children={
 								isAuthed
 									? [
-											<ProfilePic src={Cookies.get("userid")} />,
-											<Spacer size={3} />,
+											<ProfilePic src={Cookies.get("userid")} label = {<Header3 text = {Cookies.get('username')}/>}/>,
+											,
+
+											<Spacer size={5} />,
 											<Buttons>
 												<NavButton goto="/inbox" text={"Inbox"} />
 												<NavButton goto="/settings" text={"Settings"} />

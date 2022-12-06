@@ -5,7 +5,6 @@ const updateMessages = async (chatid, sender, msg) => {
 	const messages = database.collection("messages");
 
 	const chat = await messages.findOne({ chatid: chatid });
-	console.log(chat);
 
 	if (chat != null) {
 		const m = chat.messages;
@@ -14,15 +13,19 @@ const updateMessages = async (chatid, sender, msg) => {
 			{
 				"$push": {
 					"messages": {
-						sender: sender.userid,
-						name: sender.name_short, // shortname
-						message: msg,
-						isread: 0,
-						ts: Date.now()
-					}
+                        "$each" : [{
+                            sender: sender.userid,
+                            name: sender.name_short, // shortname
+                            message: msg,
+                            isread: 0,
+                            ts: Date.now()
+                        }],
+                        "$position": 0
+                    }
 				}
 			}
 		);
+
 		return updatedMessage != null
 	}
 
