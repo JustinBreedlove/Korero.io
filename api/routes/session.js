@@ -6,7 +6,11 @@ const getUserInfo = require('../mongoint/getUserInfo')
 
 router.get('/login', async function(req, res, next) {
     const user = await getUserInfo(req.headers['x-korrero-username'])
-
+    /**Check if user is a validated user first, this is a bug that creates a useless session*/
+    if(!user || Object.keys(user).length == 0){
+        res.send(403)
+        return;
+    }
     const sessionid = await createSession(req.headers['x-korrero-username'], req.headers['x-korrero-password'])
     if (sessionid != 403)
     {
