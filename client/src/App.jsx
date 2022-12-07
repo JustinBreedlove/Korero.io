@@ -11,6 +11,7 @@ import { Inbox } from "./views/Inbox";
 import { Login } from "./views/Login";
 import { Register } from "./views/Register";
 import { Settings } from "./views/Settings";
+import { OTPAuth } from "./views/OTPAuth";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Color } from "./meta/Color.ts";
@@ -105,6 +106,7 @@ const App = () => {
 
 						<Routes>
 							<Route path="/" element={isAuthed ? <Inbox /> : <Login />} />
+							<Route path="/otp" element={<OTPAuth/>} />
 							<Route exact path="/inbox" element={isAuthed ? <Inbox /> : <Login />} />
 							<Route exact path="/login" element={isAuthed ? <Inbox /> : <Login />} />
 							<Route exact path="/register" element={isAuthed ? <Login /> : <Register />} />

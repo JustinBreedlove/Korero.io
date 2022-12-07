@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useLocalStorage } from "usehooks-ts";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Divider } from "../components/Divider";
@@ -18,7 +19,7 @@ export const Register = () => {
 	let carrier = "verizon";
 	let password1 = "";
 	let password2 = "";
-
+	let [_, setUsernameLocal] = useLocalStorage('username', username)
 	const onChangeFirstNameHandler = (e) => {
 		firstname = e.target.value;
 	};
@@ -57,17 +58,15 @@ export const Register = () => {
 				"x-korrero-2fa-method": phone,
 				"x-korrero-password": password1 == password2 ? password1 : ""
 			}
+		}).then((res) =>
+		{
+			if(!res.ok) return
+
+			window.location.replace("http://localhost:3000/otp")
+			
+	
 		});
-		console.log({
-			"x-korrero-username": username,
-			"x-korrero-phone": phone,
-			"x-korrero-email": email,
-			"x-korrero-firstname": firstname,
-			"x-korrero-lastname": lastname,
-			"x-korrero-carrier": carrier,
-			"x-korrero-2fa-method": phone,
-			"x-korrero-password": password1 == password2 ? password1 : ""
-		})
+		setUsernameLocal(username)
 
 	};
 

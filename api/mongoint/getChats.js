@@ -10,6 +10,11 @@ const getChats = async (userid) => {
         return
 	}
     
+    if(!chatids.chats)
+    {
+        return []
+    }
+    
 	const cursor = messages.find({ chatid: { $in: chatids.chats } });
 	var chats = [];
 	await cursor.forEach((chat) => {
