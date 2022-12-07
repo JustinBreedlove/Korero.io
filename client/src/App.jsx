@@ -92,7 +92,7 @@ const App = () => {
 													onClickHandler={() => {
 															fetch("/session/logout");
 															setIsAuthed(false);
-															window.location.replace("http://localhost:3000/login")
+															window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/login`)
 
 													}}
 													goto="/logout"

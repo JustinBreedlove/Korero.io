@@ -26,7 +26,7 @@ export const Login = () => {
 				{
 
 				}
-				window.location.replace("http://localhost:3000/inbox")
+				window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`)
 			})
 	};
 

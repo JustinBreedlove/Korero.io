@@ -62,7 +62,7 @@ export const Register = () => {
 		{
 			if(!res.ok) return
 
-			window.location.replace("http://localhost:3000/otp")
+			window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/otp`)
 			
 	
 		});

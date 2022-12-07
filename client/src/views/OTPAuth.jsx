@@ -13,7 +13,6 @@ export const OTPAuth = () => {
     let localUsername = useReadLocalStorage("username")
 
 
-
 	const onChangeOTPHandler = (e) => {
 		otp = e.target.value;
 	};
@@ -28,7 +27,7 @@ export const OTPAuth = () => {
 				{
 
 				}
-				window.location.replace("http://localhost:3000/inbox")
+				window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`)
 			})
 	};
 
