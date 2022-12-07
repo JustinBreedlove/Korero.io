@@ -20,14 +20,20 @@ export const Login = () => {
 	};
 
 	const onClickLoginHandler = () => {
-		fetch("/session/login" ,{headers : {'x-korrero-username': username, 'x-korrero-password' : password}}).then( res =>
-			{
-				if (!res.ok)
-				{
-
-				}
-				window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`)
-			})
+		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/session/login`, {
+			method: "GET",
+			headers: {
+				"x-korrero-username": username,
+				"x-korrero-password": password,
+				Accept: "text/html",
+				"Content-Type": "text/plain; charset=UTF-8"
+			},
+			mode : 'cors'
+		}).then((res) => {
+			if (!res.ok) {
+			}
+			window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`);
+		});
 	};
 
 	const Root = styled.div`
@@ -47,10 +53,10 @@ export const Login = () => {
         padding: 2rem 0rem 2rem 0rem;
 	`;
 	const InputContainer = styled.div`
-        display: flex;
-        margin-inline: auto;
-        flex-direction: column;
-        width: 55%;
+		display: flex;
+		margin-inline: auto;
+		flex-direction: column;
+		width: 55%;
 	`;
 	return (
 		<Root>

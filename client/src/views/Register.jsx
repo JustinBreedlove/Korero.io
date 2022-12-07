@@ -47,7 +47,7 @@ export const Register = () => {
 
 	const onClickRegisterHandler = () => {
 		if (password1 != password2) return;
-		fetch("/createuser", {
+		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/createuser`, {
 			headers: {
 				"x-korrero-username": username,
 				"x-korrero-phone": phone,
