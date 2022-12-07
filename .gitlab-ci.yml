@@ -13,3 +13,7 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml 
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+
+variables:
+  SECURE_LOG_LEVEL: error
