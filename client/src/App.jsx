@@ -24,7 +24,6 @@ const App = () => {
 	const [is500, setIs500] = useState(false);
 
 
-	useEffect(() => {});
 	const Root = styled.div`
 		display: flex;
 		justify-content: center;

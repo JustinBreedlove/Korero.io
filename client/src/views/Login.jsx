@@ -20,7 +20,7 @@ export const Login = () => {
 	};
 
 	const onClickLoginHandler = () => {
-		fetch('/session/login', {
+		fetch(`/session/login`, {
 			headers: {
 				"x-korrero-username": username,
 				"x-korrero-password": password,
