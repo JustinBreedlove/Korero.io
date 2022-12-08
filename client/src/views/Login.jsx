@@ -20,19 +20,16 @@ export const Login = () => {
 	};
 
 	const onClickLoginHandler = () => {
-		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/session/login`, {
-			method: "GET",
+		fetch('/session/login', {
 			headers: {
 				"x-korrero-username": username,
 				"x-korrero-password": password,
-				Accept: "text/html",
-				"Content-Type": "text/plain; charset=UTF-8"
-			},
-			mode : 'cors'
+
+			}
 		}).then((res) => {
 			if (!res.ok) {
 			}
-			window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`);
+			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
 		});
 	};
 
