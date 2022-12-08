@@ -45,6 +45,5 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^5.45.0",
     "typescript": "^4.9.3"
-  },
-  "proxy": "http://localhost:4000"
+  }
 }

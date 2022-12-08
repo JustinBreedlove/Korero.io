@@ -25,7 +25,7 @@ export const Inbox = () => {
 	}
 
 	useEffect(() => {
-		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/chat/get`)
+		fetch(`/chat/get`)
 		.then((res) => res.json())
 		.then((res) => {
 			chats.current = res;
