@@ -20,14 +20,14 @@ export const OTPAuth = () => {
 	const onClickValidateHandler = () => {
 
         console.log(localUsername, otp)
-		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/createuser/checkotp` ,{headers: {'x-korrero-otp' : otp,
+		fetch(`/createuser/checkotp` ,{headers: {'x-korrero-otp' : otp,
         'x-korrero-username': localUsername }}).then( res =>
 			{
 				if (!res.ok)
 				{
 
 				}
-				window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`)
+				window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`)
 			})
 	};
 

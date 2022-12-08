@@ -24,7 +24,6 @@ const App = () => {
 	const [is500, setIs500] = useState(false);
 
 
-	useEffect(() => {});
 	const Root = styled.div`
 		display: flex;
 		justify-content: center;
@@ -52,7 +51,7 @@ const App = () => {
 
 	useEffect(() => {
 
-		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/live`).then((res) => {
+		fetch(`/live`).then((res) => {
 			if (res.status >= 200 && res.status <= 299) {
 				setIsLoading(false);
 			} else {
@@ -90,9 +89,9 @@ const App = () => {
 												<NavButton goto="/settings" text={"Settings"} />
 												<NavButton
 													onClickHandler={() => {
-															fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/session/logout`, {method: "GET"});
+															fetch(`/session/logout`, {method: "GET"});
 															setIsAuthed(false);
-															window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/login`)
+															window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/login`)
 
 													}}
 													goto="/logout"
