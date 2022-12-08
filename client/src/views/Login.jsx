@@ -20,7 +20,7 @@ export const Login = () => {
 	};
 
 	const onClickLoginHandler = () => {
-		fetch(`/session/login`, {
+		fetch(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/session/login`, {
 			method: "GET",
 			headers: {
 				"x-korrero-username": username,
@@ -32,7 +32,7 @@ export const Login = () => {
 		}).then((res) => {
 			if (!res.ok) {
 			}
-			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
+			window.location.replace(`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/inbox`);
 		});
 	};
 
