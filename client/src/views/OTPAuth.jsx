@@ -25,7 +25,7 @@ export const OTPAuth = () => {
 			{
 				if (!res.ok)
 				{
-
+                    return
 				}
 				window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`)
 			})

@@ -1,63 +1,31 @@
 {
-	"me": "id",
-	"my_name": "Omar",
-	"my_name_long": "Issa, Omar",
-	"my_username": "omarbirjas",
-	"my_b64_pfp": "default",
-    "latest_msg":{
-		"from_name": "Justin",
-        "from_id" : "justinbreedlove",
-        "message": "What's up?",
-        "is_read": false
-    },
-	"messages": [
-		{
-			"who": "me",
-			"msg": "Hey!",
-			"ts": 1666634757
-		},
-		{
-			"who": "id",
-			"msg": "What's up?",
-			"ts": 1666634757
-		}
-	]
-}
-
-// Have chat ids instead of to and from messages, chat ids are hash(userid1 + userid2)
-
-
-// query info end point
-
-
-{
 	"chatid" : "h(userid1 + userid2)",
 	"actual uid1 as key" : "b64 pfp",
 	"actual uid2 as kry" :"b64 pfp",
 	"messages" :[{
 		"sender": "userid",
-		"name": "omar", // shortname
+		"name": "omar", 
 		"message": "someval", 
 		"isread": "ts or 0",
-		"ts": 166675 //newest message
+		"ts": 166675 
 	},
 	{
 		"sender": "userid",
-		"name": "justin", // shortname
+		"name": "justin",
 		"message": "responseval",
 		"isread": "ts or 0",
 		"ts": 166674
 	},{
 		"sender": "userid",
-		"name": "omar", // shortname
+		"name": "omar", 
 		"message": "some other val",
 		"isread": "ts or 0",
 		"ts": 166673
 	},{
 		"sender": "userid",
-		"name": "omar", // shortname
+		"name": "omar", 
 		"message": "anotherone",
 		"isread": "ts or 0",
-		"ts": 166672 //oldest message
+		"ts": 166672 
 	}]
 }

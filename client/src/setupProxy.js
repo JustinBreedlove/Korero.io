@@ -1,11 +1,14 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
+/**Caching is causing issues
+ * https://github.com/helmetjs/nocache (?)
+*/
 module.exports = function(app) {
   app.use(
     '/live',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -15,7 +18,7 @@ module.exports = function(app) {
     '/session/login',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -25,7 +28,7 @@ module.exports = function(app) {
     '/session/logout',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -35,7 +38,7 @@ module.exports = function(app) {
     '/createuser',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -45,7 +48,7 @@ module.exports = function(app) {
     '/createuser/checkotp',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -55,7 +58,7 @@ module.exports = function(app) {
     '/chat/start',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -65,7 +68,7 @@ module.exports = function(app) {
     '/chat/send',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
@@ -73,14 +76,14 @@ module.exports = function(app) {
     '/chat/get',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );  
   app.use(
     '/users/pfp',
     createProxyMiddleware({
       target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 
