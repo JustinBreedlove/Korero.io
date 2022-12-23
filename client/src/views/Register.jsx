@@ -74,6 +74,7 @@ export const Register = () => {
 		display: flex;
 		height: max(100% - 1rem);
 		align-items: center;
+		
 	`;
 
 	const Container = styled.div`
@@ -87,6 +88,9 @@ export const Register = () => {
 		background-color: ${Color.Primary};
 		align-text: center;
         padding: 2rem 0rem 2rem 0rem;
+		box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-webkit-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-moz-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
 	`;
 	const InputContainer = styled.div`
 		display: flex;

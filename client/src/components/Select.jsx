@@ -38,7 +38,7 @@ export const Select = ({ options, onChangeHandler }) => {
 		cursor: pointer;
 		user-select: none;
 		-webkit-user-select: none;
-
+		color: ${Color.Font};
 		&:hover {
 			background-color: ${Color.Accent3};
 
