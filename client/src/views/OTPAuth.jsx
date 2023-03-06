@@ -19,7 +19,6 @@ export const OTPAuth = () => {
 
 	const onClickValidateHandler = () => {
 
-        console.log(localUsername, otp)
 		fetch(`/createuser/checkotp` ,{headers: {'x-korrero-otp' : otp,
         'x-korrero-username': localUsername }}).then( res =>
 			{
@@ -35,6 +34,8 @@ export const OTPAuth = () => {
 		display: flex;
 		height: max(100% - 1rem);
 		align-items: center;
+		background-color: ${Color.Secondary};
+
 	`;
 
 	const Container = styled.div`

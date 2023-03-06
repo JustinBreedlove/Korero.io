@@ -6,7 +6,7 @@ const updateMessages = require("../mongoint/updateMessages");
 const validateSession = require("../mongoint/validateSession");
 const getChats = require("../mongoint/getChats");
 
-router.get("/start", async function (req, res, next) {
+router.post("/start", async function (req, res, next) {
     res.setHeader('x-korrero-error', false)
     
     const isSessionValid = await validateSession(req.cookies['username'], req.cookies['sessionid'])
@@ -14,19 +14,25 @@ router.get("/start", async function (req, res, next) {
     if(!isSessionValid)
     {
         res.setHeader('x-korrero-error', true)
-        res.send(403)
+        res.sendStatus(403)
         return false
     }
     const user1 = await getUserInfo(req.cookies['userid'])
     const user2 = await getUserInfo(req.headers['x-korrero-receiver'])
 
+    if(!Object.keys(user1).length || !Object.keys(user2).length)    
+    {
+        res.setHeader('x-korrero-error', true)
+        res.sendStatus(400)
+        return false
+    }
+
     const chatid = await createChat(user1,user2, req.headers['x-korrero-msg'])
-   
-    res.setHeader("x-korrero-chatid", chatid)
+
     res.send(chatid)
 });
 
-router.get("/send", async function (req, res, next) {
+router.post("/send", async function (req, res, next) {
     res.setHeader('x-korrero-error', false)
     
     const isSessionValid = await validateSession(req.cookies['username'], req.cookies['sessionid'])

@@ -1,10 +1,11 @@
 var mongo = require("./connect");
-const validateSession = require("./validateSession");
+
 const updateMessages = async (chatid, sender, msg) => {
 	const database = mongo.db("korrero");
 	const messages = database.collection("messages");
 
 	const chat = await messages.findOne({ chatid: chatid });
+	
 
 	if (chat != null) {
 		const m = chat.messages;

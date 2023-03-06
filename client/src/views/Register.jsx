@@ -74,6 +74,8 @@ export const Register = () => {
 		display: flex;
 		height: max(100% - 1rem);
 		align-items: center;
+		background-color: ${Color.Secondary};
+
 		
 	`;
 

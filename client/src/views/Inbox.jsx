@@ -6,11 +6,14 @@ import { ActiveChat } from "../containers/ActiveChat";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Color } from "../meta/Color.ts";
+import {Error} from "../components/Error"
 //TODO: Add user functionality to start a new chat
 
 export const Inbox = () => {
 	const chats = useRef([]);
+	const error = useRef([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isError, setIsError] = useState(false);
 	const [activeChat, setActiveChat] = useState(null);
 	const [activeChatId, setActiveChatId] = useState(null);
 	const [activeChatLocal, setActiveChatLocal] = useLocalStorage("activeChat", "");
@@ -21,10 +24,6 @@ export const Inbox = () => {
 
 	const getMessages = () =>
 	{
-		
-	}
-
-	useEffect(() => {
 		fetch(`/chat/get`)
 		.then((res) => res.json())
 		.then((res) => {
@@ -39,12 +38,18 @@ export const Inbox = () => {
 			}
 			setIsLoading(false);
 		});
+	}
+	
+	useEffect(() => {
+		getMessages();
 	}, []);
 
 	const Root = styled.div`
 		width: 100%;
 		height: min(100% - 4rem);
 		display: flex;
+		background-color: ${Color.Secondary};
+
 	`;
 
 	const ChatsContainer = styled.div`
@@ -54,6 +59,8 @@ export const Inbox = () => {
 		height: 100%;
 	`;
 	const FocusedChat = styled.div`
+		display: flex;
+		flex-direction: column-reverse;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		width: 100%;
@@ -62,20 +69,19 @@ export const Inbox = () => {
 		display: flex;
 		align-items: center;
 		padding: 10px;
-		position: sticky;
 		bottom: 0px;
 		background-color: ${Color.Primary};
 		margin-top: 1rem;
 	`;
 
 	const NewChatBox = styled.div`
-	display: flex;
+		display: flex;
+		align-items: center;
+		padding: 0rem 1rem 0rem 1rem;
+		height: 5rem;
+		background-color: ${Color.Accent3};
+		border: 1px solid ${Color.Accent2};
 
-	align-items: center;
-	padding: 0rem 1rem 0rem 1rem;
-	height: 5rem;
-	background-color: ${Color.Accent3};
-	border: 1px solid ${Color.Accent2};
 `;
 	const onChangeMessageDraft = (e) => {
 		messageDraft.current = e.target.value;
@@ -84,18 +90,34 @@ export const Inbox = () => {
 		messageStartDraft.current = e.target.value;
 	};
 	const onClickSendHandler = (e) => {
-		fetch("/chat/send", { headers: { "x-korrero-chatid": activeChatId || activeChatLocal, "x-korrero-msg": messageDraft.current } }).then((res) => {
+		
+		fetch("/chat/send", { method: "POST", headers: { "x-korrero-chatid": activeChatId || activeChatLocal, "x-korrero-msg": messageDraft.current } }).then((res) => {
 			messageDraft.current = "";
+			getMessages()
 		});
 	};
-	const onClickStartHandler = (e) => {
-		fetch("/chat/start", { headers: { "x-korrero-receiver": messageStartDraft.current, "x-korrero-msg": "" } }).then((res) => {
+	const onClickStartHandler =  (e) => {
+		setIsError(false)
+		fetch("/chat/start", { method: "POST", headers: { "x-korrero-receiver": messageStartDraft.current, "x-korrero-msg": "" } }).then(async (res) => {
 			messageStartDraft.current = "";
+			if(res.status == 400)
+			{
+				error.current = [<Error errorMessage = {"Invalid Account Details"}/>]
+				setIsError(true)
+				
+				return;
+			}
+
+			getMessages()
 		});
+		
 	};
 	return (
 		<Root>
 			<ChatsContainer>
+				{
+					error.current
+				}
 				<NewChatBox>	
 					<Input onChangeHandler={onChangeMessageStartDraft} text={"User/Email/Phone"} />
 					<Button text={"Start"} type={"secondary"} onClickHandler={onClickStartHandler} />
@@ -118,15 +140,18 @@ export const Inbox = () => {
 					: []}
 			</ChatsContainer>
 			<FocusedChat>
+			{activeChat ? 
+					<ComposeMessage>
+						<Input onChangeHandler={onChangeMessageDraft} text={"Message"} />
+						<Button text={"Send"} type={"secondary"} onClickHandler={onClickSendHandler} />
+					</ComposeMessage>
+					:
+					[]}
 				{activeChat}
-				{activeChat ? 
-				<ComposeMessage>
-					<Input onChangeHandler={onChangeMessageDraft} text={"Message"} />
-					<Button text={"Send"} type={"secondary"} onClickHandler={onClickSendHandler} />
-				</ComposeMessage>
-				:
-				[]}
+
+
 			</FocusedChat>
+
 		</Root>
 	);
 };
