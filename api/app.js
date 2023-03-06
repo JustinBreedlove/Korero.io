@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
+var bodyParser = require("body-parser")
 
 var liveRouter = require('./routes/live');
 var indexRouter = require('./routes/index');
@@ -19,6 +20,7 @@ var chatRouter = require('./routes/chat');
 
 
 // view engine setup
+app.use(bodyParser.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger('dev'));

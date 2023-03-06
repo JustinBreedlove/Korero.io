@@ -10,24 +10,30 @@ import { useReadLocalStorage } from "usehooks-ts";
 
 export const OTPAuth = () => {
 	let otp = "";
-    let localUsername = useReadLocalStorage("username")
-
+	let localUsername = useReadLocalStorage("username");
 
 	const onChangeOTPHandler = (e) => {
 		otp = e.target.value;
 	};
 
 	const onClickValidateHandler = () => {
+		let body = {
+			otp,
+			username: localUsername
+		};
 
-		fetch(`/createuser/checkotp` ,{headers: {'x-korrero-otp' : otp,
-        'x-korrero-username': localUsername }}).then( res =>
-			{
-				if (!res.ok)
-				{
-                    return
-				}
-				window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`)
-			})
+		fetch(`/createuser/checkotp`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		}).then((res) => {
+			if (!res.ok) {
+				return;
+			}
+			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
+		});
 	};
 
 	const Root = styled.div`
@@ -35,7 +41,6 @@ export const OTPAuth = () => {
 		height: max(100% - 1rem);
 		align-items: center;
 		background-color: ${Color.Secondary};
-
 	`;
 
 	const Container = styled.div`
@@ -52,10 +57,10 @@ export const OTPAuth = () => {
 		-moz-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
 	`;
 	const InputContainer = styled.div`
-        display: flex;
-        margin-inline: auto;
-        flex-direction: column;
-        width: 55%;
+		display: flex;
+		margin-inline: auto;
+		flex-direction: column;
+		width: 55%;
 	`;
 	return (
 		<Root>

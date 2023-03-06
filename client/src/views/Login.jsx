@@ -24,12 +24,18 @@ export const Login = () => {
 	const onClickLoginHandler = (e) => {
 		e.preventDefault();
 		setIsError(false)
+
+		let body = {
+			username,
+			password
+		}
+
 		fetch(`/session/login`, {
 			method: "POST",
 			headers: {
-				"x-korrero-username": username,
-				"x-korrero-password": password
-			}
+				"Content-Type": "application/json"
+			  },
+			body: JSON.stringify(body)
 		}).then((res) => {
 			if (res.status === 403) {
 				error.current = [<Error errorMessage = {"Invalid Credentials"}/>]

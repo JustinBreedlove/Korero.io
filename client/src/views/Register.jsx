@@ -45,19 +45,26 @@ export const Register = () => {
 		password2 = e.target.value;
 	};
 
+
 	const onClickRegisterHandler = () => {
 		if (password1 != password2) return;
+
+		let body = {
+			username,
+			phone,
+			email,
+			firstname,
+			lastname,
+			carrier,
+			password: password1
+		}
+
 		fetch(`/createuser`, {
+			method: "POST",
 			headers: {
-				"x-korrero-username": username,
-				"x-korrero-phone": phone,
-				"x-korrero-email": email,
-				"x-korrero-firstname": firstname,
-				"x-korrero-lastname": lastname,
-				"x-korrero-carrier": carrier,
-				"x-korrero-2fa-method": phone,
-				"x-korrero-password": password1 == password2 ? password1 : ""
-			}
+				"Content-Type": "application/json"
+			  },
+			body: JSON.stringify(body)
 		}).then((res) =>
 		{
 			if(!res.ok) return

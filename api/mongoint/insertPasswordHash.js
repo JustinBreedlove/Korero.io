@@ -2,6 +2,8 @@ var mongo = require('./connect');
 var crypto = require('crypto')
 const insertPasswordHash = async (password, username) =>
 {
+
+    console.log(password, "inserPasswordHash")
     const salt = Math.floor(Math.random() * 10 ** 8)
     const hashedpassword = crypto.createHash('sha256').update(`${password}${salt}`).digest('hex');
 
