@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ProfilePic } from "../components/ProfilePic";
 
 export const MessageHim = ({ msg, pic, name }) => {
@@ -10,6 +9,9 @@ export const MessageHim = ({ msg, pic, name }) => {
         align-items: center;
         height: 5rem;
         margin-right: auto;
+		background-color: ${Color.Accent4};
+		border-radius: 10px;
+		margin-top: 1rem;
 
 	`;
 	const MessageContainer = styled.div`

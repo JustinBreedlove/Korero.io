@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-export const Input = ({ placeholder, type, text, onChangeHandler }) => {
+export const Input = ({ placeholder, type, text, onChangeHandler, value }) => {
 
 	const Root = styled.div`
         display: flex;
@@ -13,11 +12,8 @@ export const Input = ({ placeholder, type, text, onChangeHandler }) => {
         margin: 10px;
 
     `;
-    const Label = styled.label`
-        position:absolute;
+	const Label = styled.label``
 
-
-    `;
 	const RootInput = styled.input`
 		display: flex;
 
@@ -38,7 +34,7 @@ export const Input = ({ placeholder, type, text, onChangeHandler }) => {
 		&:active {
 			text-decoration: none;
 		}
-
+		align-self:center;
 		align-items: center;
 		text-align: center;
 		vertical-align: middle;
@@ -55,7 +51,7 @@ export const Input = ({ placeholder, type, text, onChangeHandler }) => {
 
 	return (
 		<Root>
-			<Label>{text}</Label> <RootInput onChange = {onChangeHandler} type= {type} placeholder={placeholder} />
+			 {value ? <Label>{value}</Label> : []}<RootInput value = {value} onChange = {onChangeHandler} type= {type} placeholder={text} />
 		</Root>
 	);
 };

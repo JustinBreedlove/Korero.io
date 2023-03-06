@@ -1,25 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { Link } from "react-router-dom";
 
-export const Button = ({ text, onClickHandler, type = "primary" | "secondary", goto }) => {
-	let isPrimary = type == "primary";
-	const Root = styled(Link)`
+export const Select = ({ options, onChangeHandler }) => {
+	const Root = styled.div`
+		display: flex;
+		justify-content: center;
+		height: min(100% - 33rem);
+		width: 100%;
+		margin: 10px;
+	`;
+
+	const RootSelect = styled.select`
 		display: flex;
 
-		background-color: ${isPrimary ? Color.Accent2 : Color.Accent1};
+		background-color: ${Color.Secondary};
 
 		box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);
 		-webkit-box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);
 		-moz-box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);
 		border: none;
 		border-radius: 5px;
-		width: max(25%);
-		margin-inline: auto;
 		height: max(30px);
 		padding: 10px;
-
+		width: 100%;
 		&:focus,
 		&:hover,
 		&:visited,
@@ -27,23 +31,25 @@ export const Button = ({ text, onClickHandler, type = "primary" | "secondary", g
 		&:active {
 			text-decoration: none;
 		}
-		justify-content: center;
+		align-self: center;
 		align-items: center;
+		text-align: center;
 		vertical-align: middle;
-
 		cursor: pointer;
 		user-select: none;
 		-webkit-user-select: none;
 
 		&:hover {
 			background-color: ${Color.Accent3};
+
 			transition-duration: 250ms;
 		}
+		height: 50px;
 	`;
 
 	return (
-		<Root to={goto} onClick={onClickHandler}>
-			{text}
+		<Root>
+			<RootSelect onChange={onChangeHandler}>{options}</RootSelect>
 		</Root>
 	);
 };

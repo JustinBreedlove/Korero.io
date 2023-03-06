@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
@@ -20,7 +20,17 @@ export const Login = () => {
 	};
 
 	const onClickLoginHandler = () => {
-		console.log(username, password);
+		fetch(`/session/login`, {
+			headers: {
+				"x-korrero-username": username,
+				"x-korrero-password": password,
+
+			}
+		}).then((res) => {
+			if (!res.ok) {
+			}
+			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
+		});
 	};
 
 	const Root = styled.div`
@@ -40,10 +50,10 @@ export const Login = () => {
         padding: 2rem 0rem 2rem 0rem;
 	`;
 	const InputContainer = styled.div`
-        display: flex;
-        margin-inline: auto;
-        flex-direction: column;
-        width: 55%;
+		display: flex;
+		margin-inline: auto;
+		flex-direction: column;
+		width: 55%;
 	`;
 	return (
 		<Root>

@@ -5,10 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
+var liveRouter = require('./routes/live');
 var indexRouter = require('./routes/index');
 var sendmessageRouter = require('./routes/sendmessage');
 var usersRouter = require('./routes/users');
 var createUserRouter = require('./routes/createuser');
+var sessionRouter = require('./routes/session');
+var chatRouter = require('./routes/chat');
+
+
 
 
 
@@ -25,6 +30,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sendmessage', sendmessageRouter);
 app.use('/createuser', createUserRouter);
+app.use('/live', liveRouter);
+app.use('/session', sessionRouter);
+app.use('/chat', chatRouter);
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

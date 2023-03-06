@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ProfilePic } from "../components/ProfilePic";
 
 export const MessageMe = ({ msg, pic, name }) => {
@@ -11,6 +10,9 @@ export const MessageMe = ({ msg, pic, name }) => {
         padding: 0rem 1rem 0rem 2rem;
         height: 5rem;
         margin-left: auto;
+		background-color: ${Color.Accent3};
+		border-radius: 10px;
+		margin-top: 1rem;
 
 	`;
 	const MessageContainer = styled.div`

@@ -1,0 +1,31 @@
+{
+	"chatid" : "h(userid1 + userid2)",
+	"actual uid1 as key" : "b64 pfp",
+	"actual uid2 as kry" :"b64 pfp",
+	"messages" :[{
+		"sender": "userid",
+		"name": "omar", 
+		"message": "someval", 
+		"isread": "ts or 0",
+		"ts": 166675 
+	},
+	{
+		"sender": "userid",
+		"name": "justin",
+		"message": "responseval",
+		"isread": "ts or 0",
+		"ts": 166674
+	},{
+		"sender": "userid",
+		"name": "omar", 
+		"message": "some other val",
+		"isread": "ts or 0",
+		"ts": 166673
+	},{
+		"sender": "userid",
+		"name": "omar", 
+		"message": "anotherone",
+		"isread": "ts or 0",
+		"ts": 166672 
+	}]
+}

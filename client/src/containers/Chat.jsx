@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ProfilePic } from "../components/ProfilePic";
 
-export const Chat = ({ latest_msg, pic, onClick }) => {
+export const Chat = ({ message, userid1, userid2, onClick }) => {
+	if (!message)
+	{
+		message = ""
+	}
 	const Root = styled.div`
         display: flex;
         align-items: center;
@@ -23,7 +26,7 @@ export const Chat = ({ latest_msg, pic, onClick }) => {
 	const Sender = styled.p`
 		margin: 0px;
 		padding: 0px;
-        ${latest_msg.is_read ? "" : "font-weight: bold" };
+        ${message.isread ? "" : "font-weight: bold" };
 	`;
 	const Message = styled.p`
 		margin: 0px;
@@ -31,10 +34,10 @@ export const Chat = ({ latest_msg, pic, onClick }) => {
 	`;
 	return (
 		<Root onClick={onClick}>
-			<ProfilePic src={pic} />
+			<ProfilePic src={message.sender == userid1 ? userid1 : userid2} />
 			<MessageContainer>
-				<Sender>{latest_msg.from_name}</Sender>
-				<Message>{latest_msg.message}</Message>
+				<Sender>{message.name}</Sender>
+				<Message>{message.message}</Message>
 			</MessageContainer>
 		</Root>
 	);
