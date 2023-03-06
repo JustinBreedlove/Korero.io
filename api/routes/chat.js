@@ -18,7 +18,7 @@ router.post("/start", async function (req, res, next) {
         return false
     }
     const user1 = await getUserInfo(req.cookies['userid'])
-    const user2 = await getUserInfo(req.headers['x-korrero-receiver'])
+    const user2 = await getUserInfo(req.body.receiver)
 
     if(!Object.keys(user1).length || !Object.keys(user2).length)    
     {
@@ -27,7 +27,7 @@ router.post("/start", async function (req, res, next) {
         return false
     }
 
-    const chatid = await createChat(user1,user2, req.headers['x-korrero-msg'])
+    const chatid = await createChat(user1,user2, req.body.msg)
 
     res.send(chatid)
 });
@@ -44,7 +44,7 @@ router.post("/send", async function (req, res, next) {
         return false
     }
     const sender = await getUserInfo(req.cookies['userid'])
-    const wasMessageSent = await updateMessages(req.headers['x-korrero-chatid'],  sender, req.headers['x-korrero-msg'])
+    const wasMessageSent = await updateMessages(req.body.chatid,  sender, req.body.msg)
     
     res.send(wasMessageSent ? 200 : 500)
 });

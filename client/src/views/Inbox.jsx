@@ -91,14 +91,29 @@ export const Inbox = () => {
 	};
 	const onClickSendHandler = (e) => {
 		
-		fetch("/chat/send", { method: "POST", headers: { "x-korrero-chatid": activeChatId || activeChatLocal, "x-korrero-msg": messageDraft.current } }).then((res) => {
+		// Encrypt messsageDraft.current
+
+
+		let body = {
+			chatid: activeChatId || activeChatLocal,
+			msg : messageDraft.current
+		}
+		
+
+		fetch("/chat/send", { method: "POST", body: JSON.stringify(body) }).then((res) => {
 			messageDraft.current = "";
 			getMessages()
 		});
 	};
 	const onClickStartHandler =  (e) => {
 		setIsError(false)
-		fetch("/chat/start", { method: "POST", headers: { "x-korrero-receiver": messageStartDraft.current, "x-korrero-msg": "" } }).then(async (res) => {
+		let body = {
+			receiver: messageStartDraft.current,
+			msg : "Your friend wants to chat"
+		}
+
+		fetch("/chat/start", { method: "POST", body: JSON.stringify(body) }).then(async (res) => {
+			
 			messageStartDraft.current = "";
 			if(res.status == 400)
 			{
