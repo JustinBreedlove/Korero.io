@@ -6,7 +6,7 @@ import { ActiveChat } from "../containers/ActiveChat";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Color } from "../meta/Color.ts";
-import {Error} from "../components/Error"
+import { Error } from "../components/Error";
 //TODO: Add user functionality to start a new chat
 
 export const Inbox = () => {
@@ -21,25 +21,23 @@ export const Inbox = () => {
 	const messageDraft = useRef(null);
 	const messageStartDraft = useRef(null);
 
-
-	const getMessages = () =>
-	{
+	const getMessages = () => {
 		fetch(`/chat/get`)
-		.then((res) => res.json())
-		.then((res) => {
-			chats.current = res;
+			.then((res) => res.json())
+			.then((res) => {
+				chats.current = res;
 
-			if (activeChatLocal != "") {
-				res.forEach((chat) => {
-					if (chat.chatid == activeChatLocal) {
-						setActiveChat(<ActiveChat chat={chat} />);
-					}
-				});
-			}
-			setIsLoading(false);
-		});
-	}
-	
+				if (activeChatLocal != "") {
+					res.forEach((chat) => {
+						if (chat.chatid == activeChatLocal) {
+							setActiveChat(<ActiveChat chat={chat} />);
+						}
+					});
+				}
+				setIsLoading(false);
+			});
+	};
+
 	useEffect(() => {
 		getMessages();
 	}, []);
@@ -49,7 +47,6 @@ export const Inbox = () => {
 		height: min(100% - 4rem);
 		display: flex;
 		background-color: ${Color.Secondary};
-
 	`;
 
 	const ChatsContainer = styled.div`
@@ -81,8 +78,7 @@ export const Inbox = () => {
 		height: 5rem;
 		background-color: ${Color.Accent3};
 		border: 1px solid ${Color.Accent2};
-
-`;
+	`;
 	const onChangeMessageDraft = (e) => {
 		messageDraft.current = e.target.value;
 	};
@@ -90,50 +86,54 @@ export const Inbox = () => {
 		messageStartDraft.current = e.target.value;
 	};
 	const onClickSendHandler = (e) => {
-		
 		// Encrypt messsageDraft.current
-
 
 		let body = {
 			chatid: activeChatId || activeChatLocal,
-			msg : messageDraft.current
-		}
-		
+			msg: messageDraft.current
+		};
 
-		fetch("/chat/send", { method: "POST", body: JSON.stringify(body) }).then((res) => {
+		fetch("/chat/send", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		}).then((res) => {
 			messageDraft.current = "";
-			getMessages()
+			getMessages();
 		});
 	};
-	const onClickStartHandler =  (e) => {
-		setIsError(false)
+	const onClickStartHandler = (e) => {
+		setIsError(false);
 		let body = {
 			receiver: messageStartDraft.current,
-			msg : "Your friend wants to chat"
-		}
+			msg: "Your friend wants to chat"
+		};
 
-		fetch("/chat/start", { method: "POST", body: JSON.stringify(body) }).then(async (res) => {
-			
+		fetch("/chat/start", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		}).then(async (res) => {
 			messageStartDraft.current = "";
-			if(res.status == 400)
-			{
-				error.current = [<Error errorMessage = {"Invalid Account Details"}/>]
-				setIsError(true)
-				
+			if (res.status == 400) {
+				error.current = [<Error errorMessage={"Invalid Account Details"} />];
+				setIsError(true);
+
 				return;
 			}
 
-			getMessages()
+			getMessages();
 		});
-		
 	};
 	return (
 		<Root>
 			<ChatsContainer>
-				{
-					error.current
-				}
-				<NewChatBox>	
+				{error.current}
+				<NewChatBox>
 					<Input onChangeHandler={onChangeMessageStartDraft} text={"User/Email/Phone"} />
 					<Button text={"Start"} type={"secondary"} onClickHandler={onClickStartHandler} />
 				</NewChatBox>
@@ -155,18 +155,16 @@ export const Inbox = () => {
 					: []}
 			</ChatsContainer>
 			<FocusedChat>
-			{activeChat ? 
+				{activeChat ? (
 					<ComposeMessage>
 						<Input onChangeHandler={onChangeMessageDraft} text={"Message"} />
 						<Button text={"Send"} type={"secondary"} onClickHandler={onClickSendHandler} />
 					</ComposeMessage>
-					:
-					[]}
+				) : (
+					[]
+				)}
 				{activeChat}
-
-
 			</FocusedChat>
-
 		</Root>
 	);
 };
