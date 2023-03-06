@@ -25,11 +25,13 @@ const App = () => {
 
 
 	const Root = styled.div`
+		color: ${Color.Font};
 		display: flex;
 		justify-content: center;
 		height: 100vh;
 		width: 100vw;
 		background-color: ${Color.Background};
+		background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, ${Color.Background} 40px ), repeating-linear-gradient( ${Color.Background}, ${Color.Secondary} );
 	`;
 	const Container = styled.div`
 		top: 25px;
@@ -37,9 +39,9 @@ const App = () => {
 		width: min(100% - 4rem, 70%);
 		height: min(100% - 4rem);
 		margin-inline: auto;
-		box-shadow: 1px 0px 129px 27px rgb(153, 153, 153);
-		-webkit-box-shadow: 1px 0px 129px 27px rgb(153, 153, 153);
-		-moz-box-shadow: 1px 0px 129px 27px rgb(153, 153, 153);
+		box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-webkit-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-moz-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
 	`;
 	const Buttons = styled.div`
 		display: flex;

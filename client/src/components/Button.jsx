@@ -9,7 +9,7 @@ export const Button = ({ text, onClickHandler, type = "primary" | "secondary", g
 		display: flex;
 
 		background-color: ${isPrimary ? Color.Accent2 : Color.Accent1};
-
+		color: ${Color.Font};
 		box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);
 		-webkit-box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);
 		-moz-box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);

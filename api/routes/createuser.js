@@ -12,14 +12,19 @@ const carrierDomains = {
 	verizon: "vtext.com",
 	att: "txt.att.net"
 };
-/* GET users listing. */
+/* POST users listing. */
 router.get("/", async function (req, res, next) {
+	res.send(200)
+})
+
+router.post("/", async function (req, res, next) {
+
 	res.setHeader("x-korrero-error", false)
 
-	const doesUserExist = await userExists(req.headers);
-	const isPhoneSafe = isPhoneSanitary(`${req.headers["x-korrero-phone"]}`)
-	const isEmailSafe = isEmailSanitary(req.headers["x-korrero-email"])
-	const isCarrierValid = (carrierDomains[req.headers["x-korrero-carrier"]] != null)
+	const doesUserExist = await userExists(req.body);
+	const isPhoneSafe = isPhoneSanitary(`${req.body.phone}`)
+	const isEmailSafe = isEmailSanitary(req.body.email)
+	const isCarrierValid = (carrierDomains[req.body.carrier] != null)
 	
 	var otp = Math.floor(Math.random() * 10 ** 6);
   
@@ -30,28 +35,28 @@ router.get("/", async function (req, res, next) {
   if (!isPhoneSafe || !isEmailSafe || doesUserExist || !isCarrierValid) {
 		res.setHeader("x-korrero-error", true)
 
-		res.setHeader("x-korrero-error-phone", isPhoneSafe)
-		res.setHeader("x-korrero-error-email", isEmailSafe)
+		res.setHeader("x-korrero-error-phone", !isPhoneSafe)
+		res.setHeader("x-korrero-error-email", !isEmailSafe)
 		res.setHeader("x-korrero-error-existing-user", doesUserExist)
-		res.setHeader("x-korrero-error-carrier", isCarrierValid)
+		res.setHeader("x-korrero-error-carrier", !isCarrierValid)
 
 		res.send(400);
 		return;
 	}
 
-	exec(`echo ${otp}  | mail -s "Your Authentication Code" ${req.headers["x-korrero-2fa-method"] == "email" ? req.headers["x-korrero-email"] : req.headers["x-korrero-phone"] + `@${carrierDomains[req.headers["x-korrero-carrier"]]}`}`);
+	exec(`echo ${otp}  | mail -s "Your Authentication Code" ${req.body.mfa == "email" ? req.body.email : req.body.phone + `@${carrierDomains[req.body.carrier]}`}`);
 	
 
 	
-	const succesfulInsert = await insertUnvalidatedUser(req.headers, otp);
+	const succesfulInsert = await insertUnvalidatedUser(req.body, otp);
 
 	res.send(succesfulInsert ? 200 : 500);
 });
 
-router.get("/checkotp", async function (req, res, next) {
+router.post("/checkotp", async function (req, res, next) {
 	res.setHeader("x-korrero-error", false)
-	const isOTPSafe = isOTPSanitary(req.headers['x-korrero-otp'])
-	const isUsernameSafe = isUsernameSanitary(req.headers['x-korrero-username'])
+	const isOTPSafe = isOTPSanitary(req.body.otp)
+	const isUsernameSafe = isUsernameSanitary(req.body.username)
   
 	if (!isOTPSafe || !isUsernameSafe) {
 		res.setHeader("x-korrero-error", true)
@@ -62,7 +67,7 @@ router.get("/checkotp", async function (req, res, next) {
 		return
 	}	
 
-	const validated = await validateUser(req.headers)
+	const validated = await validateUser(req.body)
 
 
 	res.send(validated ? 200 : 500)

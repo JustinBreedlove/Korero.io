@@ -1,11 +1,12 @@
 export enum Color
 {
-    Primary = "#00B894",
-    Secondary = "#00CEC9",
-    Accent1 = "#FF7675",
-    Accent2 = "#FDCB6E",
-    Accent3 = "#74B9FF",
-    Accent4 = "#A29BFE",
-    Background = "#55EFC4"
+    Primary = "#161C21",
+    Secondary = "#615F75",
+    Accent1 = "#083875",
+    Accent2 = "#5362CC",
+    Accent3 = "#9993C9",
+    Accent4 = "#4760F8",
+    Background = "#1D1A36",
+    Font = "#FEFEFE"
 }
 

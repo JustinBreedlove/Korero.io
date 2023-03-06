@@ -45,19 +45,26 @@ export const Register = () => {
 		password2 = e.target.value;
 	};
 
+
 	const onClickRegisterHandler = () => {
 		if (password1 != password2) return;
+
+		let body = {
+			username,
+			phone,
+			email,
+			firstname,
+			lastname,
+			carrier,
+			password: password1
+		}
+
 		fetch(`/createuser`, {
+			method: "POST",
 			headers: {
-				"x-korrero-username": username,
-				"x-korrero-phone": phone,
-				"x-korrero-email": email,
-				"x-korrero-firstname": firstname,
-				"x-korrero-lastname": lastname,
-				"x-korrero-carrier": carrier,
-				"x-korrero-2fa-method": phone,
-				"x-korrero-password": password1 == password2 ? password1 : ""
-			}
+				"Content-Type": "application/json"
+			  },
+			body: JSON.stringify(body)
 		}).then((res) =>
 		{
 			if(!res.ok) return
@@ -74,6 +81,9 @@ export const Register = () => {
 		display: flex;
 		height: max(100% - 1rem);
 		align-items: center;
+		background-color: ${Color.Secondary};
+
+		
 	`;
 
 	const Container = styled.div`
@@ -87,6 +97,9 @@ export const Register = () => {
 		background-color: ${Color.Primary};
 		align-text: center;
         padding: 2rem 0rem 2rem 0rem;
+		box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-webkit-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-moz-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
 	`;
 	const InputContainer = styled.div`
 		display: flex;

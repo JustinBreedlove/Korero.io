@@ -8,7 +8,6 @@ const validateSession = async (username, sessionid) =>
 
     const session = await sessions.findOne({"username": username, "sessionid": sessionid})
     
-    return true
     return session != null
 }
 

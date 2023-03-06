@@ -2,22 +2,22 @@ var mongo = require('./connect');
 var crypto = require('crypto')
 const insertPasswordHash = require('./insertPasswordHash')
 
-const insertUnvalidatedUser = async (headers, otp) =>
+const insertUnvalidatedUser = async (body, otp) =>
 {
-    const userid = crypto.createHash('sha256').update(`${headers['x-korrero-username']}${headers['x-korrero-phone']}`).digest('hex');
+    const userid = crypto.createHash('sha256').update(`${body.username}${body.phone}`).digest('hex');
 
     const database = mongo.db('korrero')
     const unvalidated_users = database.collection('unvalidated_users')
 
-    const shadow =  await insertPasswordHash(headers['x-korrero-password'], headers['x-korrero-username'])
+    const shadow =  await insertPasswordHash(body.password, body.username)
 
     const unvalidated_user = await unvalidated_users.insertOne({
         "userid": `${userid}`,
-        "username": headers['x-korrero-username'],
-        "email": headers['x-korrero-email'],
-        "phone": headers['x-korrero-phone'],
-        "name_long": `${headers['x-korrero-lastname']}, ${headers['x-korrero-firstname']}`,
-        "name_short": headers['x-korrero-firstname'],
+        "username": body.username,
+        "email": body.email,
+        "phone": body.phone,
+        "name_long": `${body.lastname}, ${body.firstname}`,
+        "name_short": body.firstname,
         "otp": otp,
         "attempts": 0
     })

@@ -3,20 +3,30 @@ import styled from "styled-components";
 import { Color } from "../meta/Color.ts";
 
 export const Input = ({ placeholder, type, text, onChangeHandler, value }) => {
-
 	const Root = styled.div`
-        display: flex;
-        justify-content: center;
-        height: min(100% - 33rem);
-        width: 100%;
-        margin: 10px;
 
-    `;
-	const Label = styled.label``
+		display: flex;
+		justify-content: center;
+		height: min(100% - 33rem);
+		width: 100%;
+		margin: 10px;
+	`;
+	const Label = styled.label``;
 
 	const RootInput = styled.input`
 		display: flex;
+		::placeholder {
+			color: ${Color.Font};
+			opacity: 1;
+		}
 
+		:-ms-input-placeholder {
+			color: ${Color.Font};
+		}
+
+		::-ms-input-placeholder {
+			color: ${Color.Font};
+		}
 		background-color: ${Color.Secondary};
 
 		box-shadow: 1px 0px 400px -27px rgba(255, 118, 117, 1);
@@ -26,7 +36,7 @@ export const Input = ({ placeholder, type, text, onChangeHandler, value }) => {
 		border-radius: 5px;
 		height: max(30px);
 		padding: 10px;
-        width: 100%;
+		width: 100%;
 		&:focus,
 		&:hover,
 		&:visited,
@@ -34,7 +44,7 @@ export const Input = ({ placeholder, type, text, onChangeHandler, value }) => {
 		&:active {
 			text-decoration: none;
 		}
-		align-self:center;
+		align-self: center;
 		align-items: center;
 		text-align: center;
 		vertical-align: middle;
@@ -51,7 +61,8 @@ export const Input = ({ placeholder, type, text, onChangeHandler, value }) => {
 
 	return (
 		<Root>
-			 {value ? <Label>{value}</Label> : []}<RootInput value = {value} onChange = {onChangeHandler} type= {type} placeholder={text} />
+			{value ? <Label>{value}</Label> : []}
+			<RootInput value={value} onChange={onChangeHandler} type={type} placeholder={text} />
 		</Root>
 	);
 };

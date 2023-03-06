@@ -1,8 +1,8 @@
 const insertValidatedUser = require('./insertValidatedUser');
 const removeUnvalidatedUser = require('./removeUnvalidatedUser')
-const validatedUser = async (headers) =>
+const validatedUser = async (body) =>
 {
-    const userData = await removeUnvalidatedUser(headers['x-korrero-username'], headers['x-korrero-otp'])
+    const userData = await removeUnvalidatedUser(body.username, body.otp)
     var validated;
     if(userData)
     {

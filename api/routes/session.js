@@ -4,15 +4,15 @@ const createSession = require('../mongoint/createSession')
 const destroySession = require('../mongoint/destroySession')
 const getUserInfo = require('../mongoint/getUserInfo')
 
-router.get('/login', async function(req, res, next) {
-
-    const user = await getUserInfo(req.headers['x-korrero-username'])
+router.post('/login', async function(req, res, next) {
+    const user = await getUserInfo(req.body.username)
     /**Check if user is a validated user first, this is a bug that creates a useless session*/
     if(!user || Object.keys(user).length == 0){
         res.send(403)
         return;
     }
-    const sessionid = await createSession(req.headers['x-korrero-username'], req.headers['x-korrero-password'])
+
+    const sessionid = await createSession(req.body.username, req.body.password)
     if (sessionid != 403)
     {
         res.cookie("sessionid", sessionid);
