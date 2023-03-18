@@ -37,22 +37,20 @@ describe('isEmailSanitary', function() {
 
 //test for isPhoneSanitary
 describe('isPhoneSanitary', function() {
-  it('should return true for a 10-digit American phone number', function() {
-    const phone = '1234567890';
-    const result = isPhoneSanitary(phone);
-    assert.isTrue(result);
-  });
-
-  it('should return false for a non-10-digit phone number', function() {
-    const phone = '1234';
-    const result = isPhoneSanitary(phone);
-    assert.isFalse(result);
+  it('should return true for a 10-digit phone number consisting only of digits', function() {
+    assert.isTrue(isPhoneSanitary('1234567890'));
   });
 
   it('should return false for a phone number with non-digits', function() {
-    const phone = '123-456-7890';
-    const result = isPhoneSanitary(phone);
-    assert.isFalse(result);
+    assert.isFalse(isPhoneSanitary('123-456-7890'));
+  });
+
+  it('should return false for a phone number with less than 10 digits', function() {
+    assert.isFalse(isPhoneSanitary('123456789'));
+  });
+
+  it('should return true for a phone number with more than 10 digits', function() {
+    assert.isTrue(isPhoneSanitary('12345678901'));
   });
 });
 
