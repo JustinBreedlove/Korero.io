@@ -86,6 +86,26 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    '/otp/checkreset',
+    createProxyMiddleware({
+      target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
+      changeOrigin: true
+    })
+  );
+  app.use(
+    '/password/reset',
+    createProxyMiddleware({
+      target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
+      changeOrigin: true
+    })
+  );
 
-
+  app.use(
+    '/password/user',
+    createProxyMiddleware({
+      target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
+      changeOrigin: true
+    })
+  );
 };

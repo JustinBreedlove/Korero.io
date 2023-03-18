@@ -12,11 +12,13 @@ import { Login } from "./views/Login";
 import { Register } from "./views/Register";
 import { Settings } from "./views/Settings";
 import { OTPAuth } from "./views/OTPAuth";
+import { ForgotPassword } from "./views/ForgotPassword";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Color } from "./meta/Color.ts";
-import { Header1 } from "./components/Header1";
 import { Header3 } from "./components/Header3";
+import { OTPReset } from "./views/OTPReset";
+import { ResetPassword } from "./views/ResetPassword";
 
 const App = () => {
 	const [isAuthed, setIsAuthed] = useState(false);
@@ -110,6 +112,9 @@ const App = () => {
 							<Route path="/otp" element={<OTPAuth/>} />
 							<Route exact path="/inbox" element={isAuthed ? <Inbox /> : <Login />} />
 							<Route exact path="/login" element={isAuthed ? <Inbox /> : <Login />} />
+							<Route exact path="/forgot" element={isAuthed ? <Inbox /> : <ForgotPassword />} />
+							<Route exact path="/otpreset" element={isAuthed ? <Inbox /> : <OTPReset />} />
+							<Route exact path="/resetpassword" element={isAuthed ? <Inbox /> : <ResetPassword />} />
 							<Route exact path="/register" element={isAuthed ? <Login /> : <Register />} />
 							<Route exact path="/settings" element={isAuthed ? <Settings /> : <Login />} />
 						</Routes>

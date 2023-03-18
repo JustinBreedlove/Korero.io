@@ -7,31 +7,32 @@ import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
 import { Error } from "../components/Error"
-import { Link } from "react-router-dom";
 
-export const Login = () => {
+/**
+ * 
+ * @returns 
+ * 
+ * Create two pages. OTP page, then password reset page.
+ */
+
+export const ForgotPassword = () => {
 	let username = "";
-	let password = "";
 	const error = useRef([]);
 	const [isError, setIsError] = useState(false)
 	const onChangeUsernameHandler = (e) => {
 		username = e.target.value;
 	};
 
-	const onChangePasswordHandler = (e) => {
-		password = e.target.value;
-	};
 
-	const onClickLoginHandler = (e) => {
+	const onClickResetPasswordHandler = (e) => {
 		e.preventDefault();
 		setIsError(false)
 
 		let body = {
 			username,
-			password
 		}
 
-		fetch(`/session/login`, {
+		fetch(`/password/user`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -39,7 +40,7 @@ export const Login = () => {
 			body: JSON.stringify(body)
 		}).then((res) => {
 			if (res.status === 403) {
-				error.current = [<Error errorMessage = {"Invalid Credentials"}/>]
+				error.current = [<Error errorMessage = {"Invalid Account Details"}/>]
 				setIsError(true)
 
 				return;
@@ -53,7 +54,7 @@ export const Login = () => {
 			}
 			setIsError(false);
 			error.current = [];
-			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
+			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/otpreset`);
 
 		});
 	};
@@ -80,34 +81,24 @@ export const Login = () => {
 		-moz-box-shadow: 0px 0px 21px 2px ${ isError ? "red" : "rgba(189,218,222,0.49)"};
 	`;
 	const InputContainer = styled.div`
+		box-color :
 		display: flex;
 		margin-inline: auto;
 		flex-direction: column;
 		width: 55%;
 	`;
 
-	const ForgotPassword = styled(Link)`
-		display: flex;
-		justify-content: center;
-		font-size: 1.4rem;
-	`
-	
 
 	return (
 		<Root>
 			<Container>
-				<Header1 text={"Please login"} />
-				<Header3 text={"to continue to Korero"} />
+				<Header1 text={"Password Reset"} />
+				<Header3 text={"Please enter your username, email, or phone number associated with your account."} />
 				{isError ? error.current : []}
 				<InputContainer>
 					<Input onChangeHandler={onChangeUsernameHandler} text={"Username"} />
-					<Input onChangeHandler={onChangePasswordHandler} type={"password"} text={"Password"} />
 				</InputContainer>
-				<Button onClickHandler={onClickLoginHandler} text={"Login"} type={"primary"} />
-				<Divider size={1} />
-
-				<Button goto={"/register"} text={"Register"} type={"secondary"} />
-				<ForgotPassword to="/forgot" >Reset Password</ForgotPassword>
+				<Button onClickHandler={onClickResetPasswordHandler} text={"Reset"} type={"primary"} />
 
 			</Container>
 		</Root>
