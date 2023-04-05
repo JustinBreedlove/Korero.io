@@ -46,14 +46,19 @@ stages:
 
   - stage: deploy
     displayName: 'Deploy'
+    dependsOn: build
     jobs:
-      - job: deploy
-        displayName: 'Deploy'
-        steps:
-          - task: AzureWebApp@1
-            inputs:
-              azureSubscription: '$(azureSubscription)'
-              appType: 'webAppLinux'
-              appName: '$(appName)'
-              package: '$(System.DefaultWorkingDirectory)/client-build'
-              runtimeStack: 'NODE|14.x'
+      - deployment: deploy
+        displayName: 'Deploy to Azure Web App'
+        environment: 'Korero Production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureWebApp@1
+                  inputs:
+                    azureSubscription: '$(azureSubscription)'
+                    appType: 'webAppLinux'
+                    appName: '$(appName)'
+                    package: '$(System.DefaultWorkingDirectory)/client-build'
+                    runtimeStack: 'NODE|14.x'
