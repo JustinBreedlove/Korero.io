@@ -1,1 +1,59 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+variables:
+  azureSubscription: '$(azureSubscription)'
+  appName: 'webAppLinux'
+
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-20.04
+
+stages:
+  - stage: build
+    displayName: 'Build'
+    jobs:
+      - job: build
+        displayName: 'Build'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '14.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              cd ./api
+              npm install
+              cd ../client
+              npm install
+            displayName: 'Install npm packages'
+
+          - script: |
+              cd ./api
+              npm run build
+              cd ../client
+              npm run build
+            displayName: 'Build the app'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathtoPublish: './client/build'
+              artifactName: 'client-build'
+
+  - stage: deploy
+    displayName: 'Deploy'
+    jobs:
+      - job: deploy
+        displayName: 'Deploy'
+        steps:
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appType: 'webAppLinux'
+              appName: '$(appName)'
+              package: '$(System.DefaultWorkingDirectory)/client-build'
+              runtimeStack: 'NODE|14.x'
