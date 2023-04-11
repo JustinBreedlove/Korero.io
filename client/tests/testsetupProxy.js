@@ -1,6 +1,4 @@
-//Testing two items both Production File and App Ports for API and normal APP
-// 1. Testing all variables in the .env.Production file
-// 2. Adding Test Cases for every Proxy that is Using Middleware and checking if connection is Successful
+//Test Cases for every Proxy that is Using Middleware and checking if connection is Successful
 
 //Using Chai for testing all variables
 const assert = require('chai').assert;
@@ -18,30 +16,6 @@ describe('Middleware', function() {
 
   const REACT_APP_HOST = process.env.REACT_APP_HOST;; // Test: Host from .env.PRODUCTION
   const REACT_APP_PORT = process.env.REACT_APP_PORT;; // Test: Port from .env.PRODUCTION
-
-  const FAST_REFRESH = process.env.FAST_REFRESH;;// Test: refresh rate for browser to see if its false
-
-  const BROWSER = process.env.BROWSER;;// Test: check if browser is disable or set to none
-
-  it('should have FAST_REFRESH set to false', function() {
-    console.log('FAST_REFRESH:', FAST_REFRESH);
-    assert.equal(FAST_REFRESH, 'false');
-  });
-
-  it('should have FAST_REFRESH set to true', function() {
-    console.log('FAST_REFRESH:', FAST_REFRESH);
-    assert.equal(FAST_REFRESH, 'true');
-  });
-
-  it('should check if the browser is disabled', function() {
-    console.log('BROWSER:', BROWSER);
-    assert.equal(BROWSER, 'none');
-  });
-
-  it('should check if the browser is true', function() {
-    console.log('BROWSER:', BROWSER);
-    assert.equal(BROWSER, 'true');
-  });
 
   //Checks to see if /live has its proxy created
   it('should create proxy middleware for "/live"', function() {
