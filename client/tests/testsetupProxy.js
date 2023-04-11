@@ -63,6 +63,25 @@ describe('Middleware', function() {
     });
   });
 
+  it('should fail to create proxy middleware for "/live" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/live', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
+
   //Checks to see if /session/login has its proxy created
   it('should create proxy middleware for "/session/login"', function() {
     console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
@@ -83,6 +102,25 @@ describe('Middleware', function() {
       done();
     });
   });
+
+  it('should fail to create proxy middleware for "/session/login" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/session/login', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
 
   ////Checks to see if /session/logout has its proxy created
   it('should create proxy middleware for "/session/logout"', function() {
@@ -105,6 +143,25 @@ describe('Middleware', function() {
     });
   });
 
+  it('should fail to create proxy middleware for "/session/logout" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/session/logout', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
+
   //Checks to see if /createuser has its proxy created
   it('should create proxy middleware for "/createuser"', function() {
     console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
@@ -125,6 +182,25 @@ describe('Middleware', function() {
       done();
     });
   });
+
+  it('should fail to create proxy middleware for "/createuser" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/createuser', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
 
   //Checks to see if /createuser/checkotp has its proxy created
   it('should create proxy middleware for "/createuser/checkotp"', function() {
@@ -147,6 +223,25 @@ describe('Middleware', function() {
     });
   });
 
+  it('should fail to create proxy middleware for "/createuser/checkotp" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/createuser/checkotp', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
+
   ////Checks to see if /chat/send has its proxy created
   it('should create proxy middleware for "/chat/send"', function() {
     console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
@@ -167,6 +262,25 @@ describe('Middleware', function() {
       done();
     });
   });
+
+  it('should fail to create proxy middleware for "/chat/send" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/chat/send', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
 
   //Checks to see if /chat/get has its proxy created
   it('should create proxy middleware for "/chat/get"', function() {
@@ -189,6 +303,25 @@ describe('Middleware', function() {
     });
   });
 
+  it('should fail to create proxy middleware for "/chat/get" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/chat/get', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+ });
+
   //Checks to see if /users/pfp has its proxy created
   it('should create proxy middleware for "/users/pfp"', function() {
     console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
@@ -206,6 +339,25 @@ describe('Middleware', function() {
       // Check if proxy is a function
       assert.equal(req.url, '/users/pfp');
       assert.equal(req.headers.host, `${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`);
+      done();
+    });
+  });
+
+  it('should fail to create proxy middleware for "/users/pfp" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/users/pfp', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
       done();
     });
   });
