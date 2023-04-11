@@ -3,7 +3,6 @@
 const assert = require('chai').assert;
 
 //testing functions from setupProxy
-const { createProxyMiddleware } = require('http-proxy-middleware');
 const dotenv = require('dotenv'); // Importing dotenv package
 
 dotenv.config({ path: '.env.production' });
