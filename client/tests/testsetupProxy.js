@@ -1,5 +1,6 @@
-//Testing all variables in both the .env.Production file
-//Testing all App Ports for both API and Non-API Hosts and Ports
+//Testing two items both Production File and App Ports for API and normal APP
+// 1. Testing all variables in both the .env.Production file
+// 2. Testing all App Ports for both API and Non-API Hosts and Ports
 
 //Using Chai for testing all variables
 const assert = require('chai').assert;
