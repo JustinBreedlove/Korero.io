@@ -27,7 +27,7 @@ describe('Middleware', function() {
     assert.equal(FAST_REFRESH, 'false');
   });
 
-  it('should have FAST_REFRESH set to false', function() {
+  it('should have FAST_REFRESH set to true', function() {
     console.log('FAST_REFRESH:', FAST_REFRESH);
     assert.equal(FAST_REFRESH, 'true');
   });
@@ -37,7 +37,7 @@ describe('Middleware', function() {
     assert.equal(BROWSER, 'none');
   });
 
-  it('should check if the browser is disabled', function() {
+  it('should check if the browser is true', function() {
     console.log('BROWSER:', BROWSER);
     assert.equal(BROWSER, 'true');
   });
