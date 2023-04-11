@@ -27,9 +27,19 @@ describe('Middleware', function() {
     assert.equal(FAST_REFRESH, 'false');
   });
 
+  it('should have FAST_REFRESH set to false', function() {
+    console.log('FAST_REFRESH:', FAST_REFRESH);
+    assert.equal(FAST_REFRESH, 'true');
+  });
+
   it('should check if the browser is disabled', function() {
     console.log('BROWSER:', BROWSER);
     assert.equal(BROWSER, 'none');
+  });
+
+  it('should check if the browser is disabled', function() {
+    console.log('BROWSER:', BROWSER);
+    assert.equal(BROWSER, 'true');
   });
 
   //Checks to see if /live has its proxy created
