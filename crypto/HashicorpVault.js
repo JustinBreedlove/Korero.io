@@ -7,7 +7,7 @@ const VAULT_API_HEALTH_ENDPOINT = '/v1/sys/health'; // The endpoint to check the
 // Function to check the health of the Vault API
 async function checkVaultConnection() {
   const url = `${VAULT_API_URL}${VAULT_API_HEALTH_ENDPOINT}`;
-  const headers = { 'X-Vault-Token': 'hvs.3UQmKXo87EMekL9S2LnK0NWh' };
+  const headers = { 'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl' };
   const response = await fetch(url, { headers });
 
   if (response.ok) {
@@ -18,7 +18,7 @@ async function checkVaultConnection() {
   }
 }
 
-//checkVaultConnection();
+checkVaultConnection();
 
 // Function to generate a new RSA key pair
 const generateKeyPair = () => {
@@ -48,7 +48,7 @@ async function writeUserSecret(userId) {
   const { publicKey, privateKey } = await generateKeyPair();
   const url = `http://127.0.0.1:8200/v1/secret/data/users/${userId}`;
   const headers = {
-    'X-Vault-Token': 'hvs.3UQmKXo87EMekL9S2LnK0NWh',
+    'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl',
     'Content-Type': 'application/json'
   };
   const data = { 
@@ -69,11 +69,10 @@ async function writeUserSecret(userId) {
 // Function to get the private key for a given user
 async function getPrivateKey(userId) {
   const url = `http://127.0.0.1:8200/v1/secret/data/users/${userId}`;
-  const headers = { 'X-Vault-Token': 'hvs.3UQmKXo87EMekL9S2LnK0NWh' };
+  const headers = { 'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl' };
   const response = await fetch(url, { headers });
   const { data } = await response.json();
   const privateKey = data.data.privateKey;
-  console.log(privateKey); // Output the private key
   return {
     privateKey: privateKey
   };
@@ -81,19 +80,36 @@ async function getPrivateKey(userId) {
 // Function to get the public key for a given user
 async function getPublicKey(userId) {
   const url = `http://127.0.0.1:8200/v1/secret/data/users/${userId}`;
-  const headers = { 'X-Vault-Token': 'hvs.3UQmKXo87EMekL9S2LnK0NWh' };
+  const headers = { 'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl' };
   const response = await fetch(url, { headers });
   const { data } = await response.json();
   const publicKey = data.data.publicKey;
-  console.log(publicKey); // Output the public key
   return {
     publicKey: publicKey
   };
 }
 
+// Function to encrypt a message using the public key of the recipient
+async function encryptMessage(message, recipientId) {
+  const { publicKey } = await getPublicKey(recipientId);
+  const buffer = Buffer.from(message, 'utf8');
+  const encrypted = crypto.publicEncrypt(publicKey, buffer);
+  return encrypted.toString('base64');
+}
 
+// Function to decrypt a message using the private key of the recipient
+async function decryptMessage(encryptedMessage, recipientId) {
+  const { privateKey } = await getPrivateKey(recipientId);
+  const buffer = Buffer.from(encryptedMessage, 'base64');
+  const decrypted = crypto.privateDecrypt(privateKey, buffer);
+  return decrypted.toString('utf8');
+}
 
-getPrivateKey('002');
-getPublicKey('002');
-getPublicKey('001');
-getPrivateKey('001');
+// 002 wants to send a message to 001
+const message = 'Hello 001! This message is encrypted.';
+const encryptedMessage = await encryptMessage(message, '001');
+console.log(encryptedMessage);
+
+// 001 receives the encrypted message and decrypts it
+const decryptedMessage = await decryptMessage(encryptedMessage, '001');
+console.log(decryptedMessage); // Output: Hello 001! This message is encrypted.
