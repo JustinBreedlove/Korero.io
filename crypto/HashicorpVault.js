@@ -7,7 +7,7 @@ const VAULT_API_HEALTH_ENDPOINT = '/v1/sys/health'; // The endpoint to check the
 // Function to check the health of the Vault API
 async function checkVaultConnection() {
   const url = `${VAULT_API_URL}${VAULT_API_HEALTH_ENDPOINT}`;
-  const headers = { 'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl' };
+  const headers = { 'X-Vault-Token': 'hvs.OzKTwqPN5Waun35Yl3QdJvKS' };
   const response = await fetch(url, { headers });
 
   if (response.ok) {
@@ -48,7 +48,7 @@ async function writeUserSecret(userId) {
   const { publicKey, privateKey } = await generateKeyPair();
   const url = `http://127.0.0.1:8200/v1/secret/data/users/${userId}`;
   const headers = {
-    'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl',
+    'X-Vault-Token': 'hvs.OzKTwqPN5Waun35Yl3QdJvKS',
     'Content-Type': 'application/json'
   };
   const data = { 
@@ -69,7 +69,7 @@ async function writeUserSecret(userId) {
 // Function to get the private key for a given user
 async function getPrivateKey(userId) {
   const url = `http://127.0.0.1:8200/v1/secret/data/users/${userId}`;
-  const headers = { 'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl' };
+  const headers = { 'X-Vault-Token': 'hvs.OzKTwqPN5Waun35Yl3QdJvKS' };
   const response = await fetch(url, { headers });
   const { data } = await response.json();
   const privateKey = data.data.privateKey;
@@ -80,7 +80,7 @@ async function getPrivateKey(userId) {
 // Function to get the public key for a given user
 async function getPublicKey(userId) {
   const url = `http://127.0.0.1:8200/v1/secret/data/users/${userId}`;
-  const headers = { 'X-Vault-Token': 'hvs.ui5brCoNNHCRIXUHORKeTPXl' };
+  const headers = { 'X-Vault-Token': 'hvs.OzKTwqPN5Waun35Yl3QdJvKS' };
   const response = await fetch(url, { headers });
   const { data } = await response.json();
   const publicKey = data.data.publicKey;
