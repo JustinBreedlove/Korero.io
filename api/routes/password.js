@@ -21,9 +21,9 @@ router.post('/reset',async function(req, res, next) {
 		return
 	}	
 
+    const user = await getUserInfo(req.body.username)
 
-
-    let otpValidated = await checkResetOTP(req.body.username, Number(req.body.otp), deleteFlag = true)
+    let otpValidated = await checkResetOTP(req.body.username, Number(req.body.otp), email = user.email, deleteFlag = true)
     let shadow;
 
 
