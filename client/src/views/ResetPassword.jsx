@@ -2,11 +2,11 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { Divider } from "../components/Divider";
 import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
 import { Error } from "../components/Error"
+import { useReadLocalStorage } from "usehooks-ts";
 
 /**
  * 
@@ -16,14 +16,19 @@ import { Error } from "../components/Error"
  */
 
 export const ResetPassword = () => {
-	let username = "";
+	let username = useReadLocalStorage("username");
+	let otp = useReadLocalStorage("otp");
+
+	let password1 = "";
+	let password2 = "";
+
 	const error = useRef([]);
 	const [isError, setIsError] = useState(false)
 	const onChangePasswordOneHandler = (e) => {
-		username = e.target.value;
+		password1 = e.target.value;
 	};
 	const onChangePasswordTwoHandler = (e) => {
-		username = e.target.value;
+		password2 = e.target.value;
 	};
 
 	const onClickResetPasswordHandler = (e) => {
@@ -32,6 +37,9 @@ export const ResetPassword = () => {
 
 		let body = {
 			username,
+			password1,
+			password2,
+			otp
 		}
 
 		fetch(`/password/reset`, {
@@ -47,7 +55,7 @@ export const ResetPassword = () => {
 
 				return;
 			}
-			if (!res.status)
+			if (!res.status || res.status !== 200)
 			{
 				error.current = [<Error errorMessage = {"Unkown Error"}/>]
 				setIsError(true)
@@ -98,8 +106,8 @@ export const ResetPassword = () => {
 				<Header3 text={"Please enter your username, email, or phone number associated with your account."} />
 				{isError ? error.current : []}
 				<InputContainer>
-					<Input onChangeHandler={onChangePasswordOneHandler} text={"Password"} />
-					<Input onChangeHandler={onChangePasswordTwoHandler} text={"Confirm Password"} />
+					<Input onChangeHandler={onChangePasswordOneHandler} type={"password"} text={"Password"} />
+					<Input onChangeHandler={onChangePasswordTwoHandler} type={"password"} text={"Confirm Password"} />
 
 				</InputContainer>
 				<Button onClickHandler={onClickResetPasswordHandler} text={"Reset"} type={"primary"} />

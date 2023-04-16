@@ -12,7 +12,6 @@ const createSession = async (username, password) =>
     const shadowEntry = await shadow.findOne({"username": username})
 
     const currentHash = crypto.createHash('sha256').update(`${password}${shadowEntry.salt}`).digest('hex');
-    console.log(shadowEntry.hash, shadowEntry.salt, currentHash, "createsession")
     
     if (shadowEntry.hash ==  currentHash && !session)
     {

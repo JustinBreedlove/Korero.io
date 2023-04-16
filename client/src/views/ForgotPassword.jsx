@@ -7,6 +7,7 @@ import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
 import { Error } from "../components/Error"
+import { useLocalStorage } from "usehooks-ts";
 
 /**
  * 
@@ -16,7 +17,8 @@ import { Error } from "../components/Error"
  */
 
 export const ForgotPassword = () => {
-	let username = "";
+	let username = ""
+	let [_, setUsernameLocal] = useLocalStorage('username', username)
 	const error = useRef([]);
 	const [isError, setIsError] = useState(false)
 	const onChangeUsernameHandler = (e) => {
@@ -31,7 +33,7 @@ export const ForgotPassword = () => {
 		let body = {
 			username,
 		}
-
+		setUsernameLocal(username)
 		fetch(`/password/user`, {
 			method: "POST",
 			headers: {
@@ -45,7 +47,7 @@ export const ForgotPassword = () => {
 
 				return;
 			}
-			if (!res.status)
+			if (!res.status || res.status !== 200)
 			{
 				error.current = [<Error errorMessage = {"Unkown Error"}/>]
 				setIsError(true)

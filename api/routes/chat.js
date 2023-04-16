@@ -8,7 +8,6 @@ const getChats = require("../mongoint/getChats");
 
 
 router.post("/start", async function (req, res, next) {
-    console.log(req.body)
     res.setHeader('x-korrero-error', false)
     
     const isSessionValid = await validateSession(req.cookies['username'], req.cookies['sessionid'])

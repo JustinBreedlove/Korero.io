@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
@@ -7,21 +7,29 @@ import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
 import { useReadLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
+import { Error } from "../components/Error"
 
 export const OTPReset = () => {
+	const [isError, setIsError] = useState(false)
+	const error = useRef([]);
+
 	let otp = "";
 	let localUsername = useReadLocalStorage("username");
+	let [_, setOTPLocal] = useLocalStorage('otp', otp)
 
 	const onChangeOTPHandler = (e) => {
 		otp = e.target.value;
 	};
 
 	const onClickContinueHandler = () => {
-		console.log("test")
+
 		let body = {
 			otp,
 			username: localUsername
 		};
+		setOTPLocal(otp)
+		setIsError(false)
 
 		fetch(`/otp/checkreset`, {
 			method: "POST",
@@ -30,9 +38,21 @@ export const OTPReset = () => {
 			},
 			body: JSON.stringify(body)
 		}).then((res) => {
-			if (!res.ok) {
+			if (res.status === 403) {
+				error.current = [<Error errorMessage = {"Invalid Pin"}/>]
+				setIsError(true)
+
 				return;
 			}
+			if (!res.status || res.status !== 200)
+			{
+				error.current = [<Error errorMessage = {"Unkown Error"}/>]
+				setIsError(true)
+
+				return;
+			}
+			setIsError(false);
+			error.current = [];
 			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/resetpassword`);
 		});
 	};
@@ -68,7 +88,7 @@ export const OTPReset = () => {
 			<Container>
 				<Header1 text={"Please enter the pin"} />
 				<Header3 text={"to reset your password"} />
-
+				{isError ? error.current : []}
 				<Divider size={3} />
 				<InputContainer>
 					<Input onChangeHandler={onChangeOTPHandler} type={"text"} text={"6-Digit Pin"} />
