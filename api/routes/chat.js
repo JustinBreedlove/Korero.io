@@ -32,7 +32,9 @@ router.post("/start", async function (req, res, next) {
 
     if(!Object.keys(user2).length)
     {
-        exec(`echo ${"You've been invited to Korero"}  | mail -s "${user1.username} sent you an invite" ${req.body.receiver}`);
+        exec(`echo Invite  | mail -s "${user1.username} sent you an invite." ${req.body.receiver}`);
+        return false
+    
     }
 
     const chatid = await createChat(user1,user2, req.body.msg)
