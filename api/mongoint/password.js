@@ -17,7 +17,7 @@ module.exports.checkResetOTP = async (username, otp, email = null, deleteFlag = 
 
     if(!email)
     {
-	    exec(`echo ${"Your Korero password has been reset."}  | mail -s "Korero Password" ${user.email}`);
+	    exec(`echo ${"Your Korero password has been reset."}  | mail -s "Korero Password" ${email}`);
     }
     if(deleteFlag)
     {
