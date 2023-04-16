@@ -28,6 +28,7 @@ router.post("/start", async function (req, res, next) {
         res.sendStatus(400)
         return false
     }
+    console.log(user1.username, req.body.receiver, Object.keys(user2).length)
 
     if(!Object.keys(user2).length)
     {
