@@ -1,7 +1,5 @@
 var mongo = require("./connect");
 const crypto = require("crypto");
-const validateSession = require("./validateSession");
-const getUserInfo = require("./getUserInfo");
 
 const createChat = async (user1, user2, msg, sessionid) => {
 	const chatid = crypto.createHash("sha256").update(`${user1.userid}${user2.userid}`).digest("hex");
