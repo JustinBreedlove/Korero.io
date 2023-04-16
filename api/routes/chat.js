@@ -32,6 +32,7 @@ router.post("/start", async function (req, res, next) {
     if(!Object.keys(user2).length)
     {
         exec(`echo You have been invited to Korrero!  | mail -s "${user1.username} sent you an invite." ${req.body.receiver}`);
+        res.sendStatus(205)
         return false
     
     }
