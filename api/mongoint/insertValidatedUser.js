@@ -1,4 +1,5 @@
 var mongo = require('./connect');
+const { makeKeyPairs } = require("../crypto/HashicorpVault");
 const insertValidatedUser = async (userData) =>
 {
     const database = mongo.db('korrero')
@@ -16,7 +17,10 @@ const insertValidatedUser = async (userData) =>
       }
     )
 
+    await makeKeyPairs(userData.userid);// call function to make key pairs and write them to the vault
+  
     return user;
+
 }
 
 module.exports = insertValidatedUser
