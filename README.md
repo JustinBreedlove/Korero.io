@@ -1,5 +1,6 @@
 #**KORERO.IO**
-##By TeamKorero
+
+#By TeamKorero
 
 # TODO - Justin - Configure Firewall script on Deployment server.
 # - release notes as a package 
