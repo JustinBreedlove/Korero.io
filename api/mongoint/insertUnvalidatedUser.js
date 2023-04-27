@@ -1,6 +1,6 @@
 var mongo = require('./connect');
 var crypto = require('crypto')
-const insertPasswordHash = require('./insertPasswordHash')
+const {insertPasswordHash} = require('./password')
 
 const insertUnvalidatedUser = async (body, otp) =>
 {

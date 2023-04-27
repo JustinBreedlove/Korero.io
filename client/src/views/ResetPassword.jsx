@@ -2,36 +2,47 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { Divider } from "../components/Divider";
 import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
 import { Error } from "../components/Error"
-import { Link } from "react-router-dom";
+import { useReadLocalStorage } from "usehooks-ts";
 
-export const Login = () => {
-	let username = "";
-	let password = "";
+/**
+ * 
+ * @returns 
+ * 
+ * Create two pages. OTP page, then password reset page.
+ */
+
+export const ResetPassword = () => {
+	let username = useReadLocalStorage("username");
+	let otp = useReadLocalStorage("otp");
+
+	let password1 = "";
+	let password2 = "";
+
 	const error = useRef([]);
 	const [isError, setIsError] = useState(false)
-	const onChangeUsernameHandler = (e) => {
-		username = e.target.value;
+	const onChangePasswordOneHandler = (e) => {
+		password1 = e.target.value;
+	};
+	const onChangePasswordTwoHandler = (e) => {
+		password2 = e.target.value;
 	};
 
-	const onChangePasswordHandler = (e) => {
-		password = e.target.value;
-	};
-
-	const onClickLoginHandler = (e) => {
+	const onClickResetPasswordHandler = (e) => {
 		e.preventDefault();
 		setIsError(false)
 
 		let body = {
 			username,
-			password
+			password1,
+			password2,
+			otp
 		}
 
-		fetch(`/session/login`, {
+		fetch(`/password/reset`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -39,12 +50,12 @@ export const Login = () => {
 			body: JSON.stringify(body)
 		}).then((res) => {
 			if (res.status === 403) {
-				error.current = [<Error errorMessage = {"Invalid Credentials"}/>]
+				error.current = [<Error errorMessage = {"Invalid Account Details"}/>]
 				setIsError(true)
 
 				return;
 			}
-			if (!res.status)
+			if (!res.status || res.status !== 200)
 			{
 				error.current = [<Error errorMessage = {"Unkown Error"}/>]
 				setIsError(true)
@@ -53,7 +64,7 @@ export const Login = () => {
 			}
 			setIsError(false);
 			error.current = [];
-			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
+			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/login`);
 
 		});
 	};
@@ -80,34 +91,26 @@ export const Login = () => {
 		-moz-box-shadow: 0px 0px 21px 2px ${ isError ? "red" : "rgba(189,218,222,0.49)"};
 	`;
 	const InputContainer = styled.div`
+		box-color :
 		display: flex;
 		margin-inline: auto;
 		flex-direction: column;
 		width: 55%;
 	`;
 
-	const ForgotPassword = styled(Link)`
-		display: flex;
-		justify-content: center;
-		font-size: 1.4rem;
-	`
-	
 
 	return (
 		<Root>
 			<Container>
-				<Header1 text={"Please login"} />
-				<Header3 text={"to continue to Korero"} />
+				<Header1 text={"Password Reset"} />
+				<Header3 text={"Please enter your username, email, or phone number associated with your account."} />
 				{isError ? error.current : []}
 				<InputContainer>
-					<Input onChangeHandler={onChangeUsernameHandler} text={"Username"} />
-					<Input onChangeHandler={onChangePasswordHandler} type={"password"} text={"Password"} />
-				</InputContainer>
-				<Button onClickHandler={onClickLoginHandler} text={"Login"} type={"primary"} />
-				<Divider size={1} />
+					<Input onChangeHandler={onChangePasswordOneHandler} type={"password"} text={"Password"} />
+					<Input onChangeHandler={onChangePasswordTwoHandler} type={"password"} text={"Confirm Password"} />
 
-				<Button goto={"/register"} text={"Register"} type={"secondary"} />
-				<ForgotPassword to="/forgot" >Reset Password</ForgotPassword>
+				</InputContainer>
+				<Button onClickHandler={onClickResetPasswordHandler} text={"Reset"} type={"primary"} />
 
 			</Container>
 		</Root>

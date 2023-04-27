@@ -3,7 +3,7 @@ var insertUnvalidatedUser = require("../mongoint/insertUnvalidatedUser");
 const validateUser = require("../mongoint/validateUser");
 var userExists = require("../mongoint/userExists");
 var exec = require("child_process").exec;
-var {isUsernameSanitary, isOTPSanitary, isEmailSanitary, isPhoneSanitary} = require('../sanitize/sanitize')
+var {isUsernameSanitary, isOTPSanitary, isEmailSanitary, isPhoneSanitary} = require('../sanitize/sanitize');
 var router = express.Router();
 
 const carrierDomains = {
@@ -69,8 +69,9 @@ router.post("/checkotp", async function (req, res, next) {
 
 	const validated = await validateUser(req.body)
 
-
 	res.send(validated ? 200 : 500)
+	
 });
 
 module.exports = router;
+
