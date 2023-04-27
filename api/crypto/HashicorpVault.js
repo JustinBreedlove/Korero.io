@@ -89,12 +89,13 @@ async function getPublicKey(userId) {
         res.on('end', () => {
           //console.log('Response:', data);
           const responseData = JSON.parse(data);
-          //console.log('Response data:', responseData);
+          console.log('Response data:', responseData);
           const publicKey = responseData.data.data.publicKey;
+
           if (!publicKey) {
             reject(new Error(`Failed to parse public key for user ${userId}`));
           }
-          //console.log(`Retrieved public key for user ${userId}: ${publicKey}`);
+          // console.log(`Retrieved public key for user ${userId}: ${publicKey}`);
           resolve( publicKey );
         });
       });
@@ -144,9 +145,9 @@ async function getPublicKey(userId) {
   
 
 // Function to encrypt a message with a given public key
-async function encryptMessage(message, receiverId) {
+async function encryptMessage(message, publicKey) {
     try {
-      const publicKey = await getPublicKey(receiverId);
+      // const publicKey = await getPublicKey(receiverId);
       const encrypted = crypto.publicEncrypt(publicKey, Buffer.from(message));
       return encrypted.toString('base64');
     } catch (err) {
@@ -205,4 +206,4 @@ module.exports.makeKeyPairs = (userid) => {
   }
 
   // Call the function with the sender ID, recipient ID, and message to send a secure message
-//sendSecureMessage('001', '002', 'Hello, how are you?');
+// sendSecureMessage('001', '002', 'Hello, how are you?');
