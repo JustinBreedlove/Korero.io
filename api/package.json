@@ -16,8 +16,8 @@
     "jade": "~1.11.0",
     "mongodb": "^4.12.1",
     "morgan": "~1.9.1",
-    "node-fetch": "^3.3.1",
     "socket.io": "^4.5.3"
+<<<<<<< HEAD
   },
   "devDependencies": {
 <<<<<<< HEAD
@@ -27,5 +27,7 @@
 =======
     "sinon": "^15.0.3"
 >>>>>>> 412f0568d7ab82841b149d467097efac0328c9c2
+=======
+>>>>>>> parent of 2885dec... hashicorp
   }
 }
