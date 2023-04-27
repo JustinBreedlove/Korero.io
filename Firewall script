@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Usage: must be in root mode or using sudo "sudo ./firewall.sh"
+
+# Flush all existing rules
+iptables -F
+
+# Set default policies to drop incoming traffic
+iptables -P INPUT DROP
+
+# Allow all outgoing traffic
+iptables -P OUTPUT ACCEPT
+
+# Allow traffic for loopback interface
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+# Allow traffic for only these ports
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --dport 8443 -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+
+#port for Database
+iptables -A INPUT -p tcp --dport 27017 -j ACCEPT
+
+# Allow SSH traffic only from specified IP addresses(order: Skanda, Justin, Harper, Omar)
+iptables -A INPUT -p tcp -s 71.136.188.66 -m state --state NEW -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -s 172.108.152.97 -m state --state NEW -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -s 128.92.210.3 -m state --state NEW -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -s 202.102.40.58 -m state --state NEW -m tcp --dport 22 -j ACCEPT
+
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Drop all other incoming traffic
+iptables -A INPUT -j DROP
