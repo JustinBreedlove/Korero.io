@@ -14,11 +14,13 @@ describe('writeUserSecret', () => {
   
   describe('encryptMessage and decryptMessage', () => {
     it('should encrypt and decrypt a message', async () => {
-      const user1UserID = '001';
+      //const user1UserID = '001';
       const user2UserID = 'test_user';
       const message = 'Hello, World!';
       const encryptedMessage = await encryptAMessage(message, user2UserID);
+      console.log(encryptedMessage);
       const decryptedMessage = await decryptAMessage(encryptedMessage, user2UserID);
+      console.log(decryptedMessage);
       expect(decryptedMessage).to.equal(message);
     });
   });

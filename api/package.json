@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "chai": "^4.3.7",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
@@ -16,5 +17,8 @@
     "mongodb": "^4.12.1",
     "morgan": "~1.9.1",
     "socket.io": "^4.5.3"
+  },
+  "devDependencies": {
+    "sinon": "^15.0.3"
   }
 }
