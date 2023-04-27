@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build":"concurrently \"cd ./api && npm run build\" \"cd ./client && npm run build\"",
+    "build": "concurrently \"cd ./api && npm run build\" \"cd ./client && npm run build\"",
     "start": "concurrently \"npm run api\" \"npm run client\"",
     "api": "cd ./api && node ./bin/www",
     "client": "cd ./client && npm start",
     "test": "concurrently \"cd ./api && npx mocha test\" \"cd ./client && npx mocha test\""
-    
   },
   "dependencies": {
     "chai": "^4.3.7",
