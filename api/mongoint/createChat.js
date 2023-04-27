@@ -1,7 +1,5 @@
 var mongo = require("./connect");
 const crypto = require("crypto");
-const validateSession = require("./validateSession");
-const getUserInfo = require("./getUserInfo");
 var {encryptAMessage}  = require("../crypto/HashicorpVault");
 
 const createChat = async (user1, user2, msg, sessionid) => {

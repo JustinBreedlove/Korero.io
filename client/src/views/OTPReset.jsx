@@ -6,45 +6,45 @@ import { Divider } from "../components/Divider";
 import { Header1 } from "../components/Header1";
 import { Header3 } from "../components/Header3";
 import { Color } from "../meta/Color.ts";
+import { useReadLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
 import { Error } from "../components/Error"
-import { Link } from "react-router-dom";
 
-export const Login = () => {
-	let username = "";
-	let password = "";
-	const error = useRef([]);
+export const OTPReset = () => {
 	const [isError, setIsError] = useState(false)
-	const onChangeUsernameHandler = (e) => {
-		username = e.target.value;
+	const error = useRef([]);
+
+	let otp = "";
+	let localUsername = useReadLocalStorage("username");
+	let [_, setOTPLocal] = useLocalStorage('otp', otp)
+
+	const onChangeOTPHandler = (e) => {
+		otp = e.target.value;
 	};
 
-	const onChangePasswordHandler = (e) => {
-		password = e.target.value;
-	};
-
-	const onClickLoginHandler = (e) => {
-		e.preventDefault();
-		setIsError(false)
+	const onClickContinueHandler = () => {
 
 		let body = {
-			username,
-			password
-		}
+			otp,
+			username: localUsername
+		};
+		setOTPLocal(otp)
+		setIsError(false)
 
-		fetch(`/session/login`, {
+		fetch(`/otp/checkreset`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
-			  },
+			},
 			body: JSON.stringify(body)
 		}).then((res) => {
 			if (res.status === 403) {
-				error.current = [<Error errorMessage = {"Invalid Credentials"}/>]
+				error.current = [<Error errorMessage = {"Invalid Pin"}/>]
 				setIsError(true)
 
 				return;
 			}
-			if (!res.status)
+			if (!res.status || res.status !== 200)
 			{
 				error.current = [<Error errorMessage = {"Unkown Error"}/>]
 				setIsError(true)
@@ -53,8 +53,7 @@ export const Login = () => {
 			}
 			setIsError(false);
 			error.current = [];
-			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inbox`);
-
+			window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/resetpassword`);
 		});
 	};
 
@@ -63,7 +62,6 @@ export const Login = () => {
 		height: max(100% - 1rem);
 		align-items: center;
 		background-color: ${Color.Secondary};
-
 	`;
 
 	const Container = styled.div`
@@ -75,9 +73,9 @@ export const Login = () => {
 		margin-inline: auto;
 		background-color: ${Color.Primary};
         padding: 2rem 0rem 2rem 0rem;
-		box-shadow: 0px 0px 21px 2px  ${ isError ? "red" : "rgba(189,218,222,0.49)"} ;
-		-webkit-box-shadow: 0px 0px 21px 2px ${ isError ? "red" : "rgba(189,218,222,0.49)"};
-		-moz-box-shadow: 0px 0px 21px 2px ${ isError ? "red" : "rgba(189,218,222,0.49)"};
+		box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-webkit-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
+		-moz-box-shadow: 0px 0px 21px 2px rgba(189,218,222,0.49);
 	`;
 	const InputContainer = styled.div`
 		display: flex;
@@ -85,30 +83,19 @@ export const Login = () => {
 		flex-direction: column;
 		width: 55%;
 	`;
-
-	const ForgotPassword = styled(Link)`
-		display: flex;
-		justify-content: center;
-		font-size: 1.4rem;
-	`
-	
-
 	return (
 		<Root>
 			<Container>
-				<Header1 text={"Please login"} />
-				<Header3 text={"to continue to Korero"} />
+				<Header1 text={"Please enter the pin"} />
+				<Header3 text={"to reset your password"} />
 				{isError ? error.current : []}
+				<Divider size={3} />
 				<InputContainer>
-					<Input onChangeHandler={onChangeUsernameHandler} text={"Username"} />
-					<Input onChangeHandler={onChangePasswordHandler} type={"password"} text={"Password"} />
+					<Input onChangeHandler={onChangeOTPHandler} type={"text"} text={"6-Digit Pin"} />
 				</InputContainer>
-				<Button onClickHandler={onClickLoginHandler} text={"Login"} type={"primary"} />
 				<Divider size={1} />
 
-				<Button goto={"/register"} text={"Register"} type={"secondary"} />
-				<ForgotPassword to="/forgot" >Reset Password</ForgotPassword>
-
+				<Button onClickHandler={onClickContinueHandler} text={"Continue"} type={"secondary"} />
 			</Container>
 		</Root>
 	);

@@ -13,6 +13,8 @@ var usersRouter = require('./routes/users');
 var createUserRouter = require('./routes/createuser');
 var sessionRouter = require('./routes/session');
 var chatRouter = require('./routes/chat');
+var otpRouter = require('./routes/otp');
+var passwordRouter = require('./routes/password');
 
 
 
@@ -35,6 +37,8 @@ app.use('/createuser', createUserRouter);
 app.use('/live', liveRouter);
 app.use('/session', sessionRouter);
 app.use('/chat', chatRouter);
+app.use('/otp', otpRouter);
+app.use('/password', passwordRouter);
 
 
 

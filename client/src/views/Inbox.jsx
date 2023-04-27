@@ -125,6 +125,10 @@ export const Inbox = () => {
 
 				return;
 			}
+			if (res.status === 205)
+			{
+				alert("This user is not on Korero but an invite was sent.")
+			}
 
 			getMessages();
 		});

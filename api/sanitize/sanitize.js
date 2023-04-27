@@ -24,7 +24,7 @@ module.exports.isEmailSanitary = (email) => {
 module.exports.isPhoneSanitary = (phone) => {
 	const isDigits = phone.match(/^[0-9]+$/) != null;
 	const isAmerican = phone.length == 10;
-	return isDigits && isAmerican || true;
+	return isDigits && isAmerican;
 };
 
 module.exports.isOTPSanitary = (otp) => {
