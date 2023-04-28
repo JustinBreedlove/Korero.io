@@ -1,6 +1,6 @@
 var mongo = require("./connect");
 const crypto = require("crypto");
-var {encryptAMessage}  = require("../crypto/HashicorpVault");
+var {encryptAMessage, getsPublicKey}  = require("../crypto/HashicorpVault");
 
 const createChat = async (user1, user2, msg, sessionid) => {
 	// create a unique chatid by hashing the user ids using SHA-256
@@ -36,7 +36,8 @@ const createChat = async (user1, user2, msg, sessionid) => {
             }
         );
 		// gets the message and uses the recipient's (user2) public key to encrypt before sending
-		const encryptedMsg = await encryptAMessage(msg, user2.userid);
+		const recipientPublicKey = await getsPublicKey(user2.userid);
+		const encryptedMsg = await encryptAMessage(msg,recipientPublicKey);
 		
 		// insert the first message into the new chat
 		messages.insertOne({
