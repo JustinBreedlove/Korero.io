@@ -12,8 +12,7 @@ const getUserPfp = async (userid) =>
 
     const user = await users.findOne({userid: userid})
 
-    
-    return !user ?  user.user_pfp : false
+    return user.user_pfp
 }
 
 module.exports = getUserPfp

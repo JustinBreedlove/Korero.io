@@ -108,4 +108,22 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+
+  app.use(
+    '/users/pfp/**',
+    createProxyMiddleware({
+      target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
+      changeOrigin: true
+    })
+  );
+
+  app.use(
+    '/users/upload/pfp',
+    createProxyMiddleware({
+      target: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
+      changeOrigin: true
+    })
+  );
+
+
 };
