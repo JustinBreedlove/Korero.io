@@ -112,9 +112,9 @@ const App = () => {
 							<Route path="/otp" element={<OTPAuth/>} />
 							<Route exact path="/inbox" element={isAuthed ? <Inbox /> : <Login />} />
 							<Route exact path="/login" element={isAuthed ? <Inbox /> : <Login />} />
-							<Route exact path="/forgot" element={isAuthed ? <Inbox /> : <ForgotPassword />} />
-							<Route exact path="/otpreset" element={isAuthed ? <Inbox /> : <OTPReset />} />
-							<Route exact path="/resetpassword" element={isAuthed ? <Inbox /> : <ResetPassword />} />
+							<Route exact path="/forgot" element={<ForgotPassword />} />
+							<Route exact path="/otpreset" element={<OTPReset />} />
+							<Route exact path="/resetpassword" element={<ResetPassword />} />
 							<Route exact path="/register" element={isAuthed ? <Login /> : <Register />} />
 							<Route exact path="/settings" element={isAuthed ? <Settings /> : <Login />} />
 						</Routes>
