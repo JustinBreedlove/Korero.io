@@ -73,7 +73,7 @@ export const Settings = () => {
 
     const onClickChangePasswordHandler = () =>
     {
-        window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/forgot`)
+        window.location.replace(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/change`)
     }
     const onChangeInputHandler = (e) =>
     {
