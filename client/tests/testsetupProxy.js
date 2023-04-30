@@ -336,4 +336,164 @@ describe('Middleware', function() {
       done();
     });
   });
+
+  //Checks to see if /otp/checkreset has its proxy created
+  it('should create proxy middleware for "/otp/checkreset"', function() {
+    console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
+    console.log('REACT_APP_API_PORT:', REACT_APP_API_PORT);
+
+    const proxy = createProxyMiddleware('/otp/checkreset', { 
+      target: `http://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`,
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // Check if proxy is a function
+      assert.equal(req.url, '/otp/checkreset');
+      assert.equal(req.headers.host, `${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`);
+      done();
+    });
+  });
+
+  it('should fail to create proxy middleware for "/otp/checkreset" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/otp/checkreset', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+  });
+
+  //Checks to see if /password/reset has its proxy created
+  it('should create proxy middleware for "/password/reset"', function() {
+    console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
+    console.log('REACT_APP_API_PORT:', REACT_APP_API_PORT);
+
+    const proxy = createProxyMiddleware('/password/reset', { 
+      target: `http://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`,
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // Check if proxy is a function
+      assert.equal(req.url, '/password/reset');
+      assert.equal(req.headers.host, `${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`);
+      done();
+    });
+  });
+
+  it('should fail to create proxy middleware for "/password/reset" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/password/reset', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+  });
+
+  //Checks to see if /users/pfp/** has its proxy created
+  it('should create proxy middleware for "/users/pfp"', function() {
+    console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
+    console.log('REACT_APP_API_PORT:', REACT_APP_API_PORT);
+
+    const proxy = createProxyMiddleware('/users/pfp/**', { 
+      target: `http://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`,
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // Check if proxy is a function
+      assert.equal(req.url, '/users/pfp/**');
+      assert.equal(req.headers.host, `${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`);
+      done();
+    });
+  });
+
+  it('should fail to create proxy middleware for "/users/pfp/**" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/users/pfp/**', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+  });
+
+  //Checks to see if /users/upload/pfp has its proxy created
+  it('should create proxy middleware for "/users/upload/pfp"', function() {
+    console.log('REACT_APP_API_HOST:', REACT_APP_API_HOST);
+    console.log('REACT_APP_API_PORT:', REACT_APP_API_PORT);
+
+    const proxy = createProxyMiddleware('/users/upload/pfp', { 
+      target: `http://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`,
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // Check if proxy is a function
+      assert.equal(req.url, '/users/upload/pfp');
+      assert.equal(req.headers.host, `${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`);
+      done();
+    });
+  });
+
+  it('should fail to create proxy middleware for "/users/upload/pfp" with invalid target URL', function() {
+    console.log('REACT_APP_HOST:', REACT_APP_HOST);
+    console.log('REACT_APP_PORT:', REACT_APP_PORT);
+
+    const proxy = createProxyMiddleware('/users/upload/pfp', { 
+      target: 'invalid_url',
+      changeOrigin: true,
+    });
+    
+    const req = {};
+    const res = {};
+    
+    proxy(req, res, function(){
+      // This function should not be called
+      assert.fail('Proxy middleware created successfully, but it should have failed');
+      done();
+    });
+  });
 });
