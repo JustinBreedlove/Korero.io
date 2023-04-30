@@ -1,0 +1,46 @@
+1. (Pm2 commands work when you cd into API)
+
+Start pm2 running in server:
+pm2 start app.js
+
+Stop pm2 running in server:
+pm2 stop app.js
+
+status on the srver running pm2:
+pm2 status
+
+restart pm2 on the server:
+pm2 restart app.js
+
+2. (Nodemon to make sure you can edit changes in code and will automatically restart among changes)
+
+start nodemon env:
+nodemon app.js
+
+3. (Apache used for setting up the reverse proxy)
+
+install apache on the server:
+sudo apt install apache2
+
+install required modules for reverse proxy on the server:
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod proxy_balancer
+sudo a2enmod lbmethod_byrequests
+
+Trace the path to put in the conf file for reverse proxy on server:
+sudo nano /etc/apache2/sites-available/Korrero.conf
+
+enable virtual host on apache:
+sudo a2ensite Korrero.conf
+
+Restart the Apache Web server for changes to take in effect:
+sudo systemctl restart apache2
+
+4. (Config Domain)PENDING
+
+5. (build the application then push to the vps.net production server)
+
+Build script(might need to be edited for accuracy on the build command):
+
+"build": "concurrently \"cd ./api && npm run build\" \"cd ./client && npm run build\""
