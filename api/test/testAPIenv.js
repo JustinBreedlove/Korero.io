@@ -12,6 +12,11 @@ describe('Environment Variables', () => {
     assert.isNotEmpty(process.env.MONGOPASSWORD, 'MONGOPASSWORD must not be empty');
   });
 
+  it('should have a valid MongoDB IP address', () => {
+    assert.isString(process.env.MONGOIP, 'MONGOIP must be a string');
+    assert.isNotEmpty(process.env.MONGOIP, 'MONGOIP must not be empty');
+  });
+
   it('should have a valid Vault address', () => {
     assert.isString(process.env.VAULT_ADDR, 'VAULT_ADDR must be a string');
     assert.isNotEmpty(process.env.VAULT_ADDR, 'VAULT_ADDR must not be empty');
@@ -30,6 +35,11 @@ describe('Environment Variables', () => {
   it('should fail if MONGOPASSWORD is not defined', () => {
     delete process.env.MONGOPASSWORD;
     assert.isUndefined(process.env.MONGOPASSWORD, 'MONGOPASSWORD must not be defined');
+  });
+
+  it('should fail if MONGOIP is not defined', () => {
+    delete process.env.MONGOIP;
+    assert.isUndefined(process.env.MONGOIP, 'MONGOIP must not be defined');
   });
 
   it('should fail if VAULT_ADDR is not defined', () => {
