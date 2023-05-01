@@ -2,9 +2,6 @@
 
 # Usage: must be in root mode or using sudo "sudo ./firewall.sh"
 
-# Flush all existing rules
-iptables -F
-
 # Set default policies to drop incoming traffic
 iptables -P INPUT DROP
 
