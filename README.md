@@ -32,7 +32,9 @@ The start script which brings the website alive uses npm run API first which goe
 # Justin Breedlove:
 I am responsible for creating and connecting an artifact repository using docker for version control. We used this platform for a couple of different features. The main feature we wanted from this platform is of course the artifact repository for efficient CI/CD which allowed for easier version control. Another feature we leveraged was the security scan of the artifacts for potential vulnerabilities. I also implemented a checksum within the artifact repository to make sure files were not intercepted.
 
-For The second part of my requirements, I used gitLab security and compliance to scan the code base and enforce security policies. After learning how to use GitLab security and compliance I engineered a Static Application Security Test (SAST) by developing a security script that scans all files and dependencies for potential weak points or vulnerabilities within the infrastructure. I then documented and reported the results of the SAST and communicated with team any concerns regarding security.  
+For The second part of my requirements, I used gitLab security and compliance to scan the code base and enforce security policies. After learning how to use GitLab security and compliance I engineered a Static Application Security Test (SAST) by developing a security script that scans all files and dependencies for potential weak points or vulnerabilities within the infrastructure. I then documented and reported the results of the SAST and communicated with the team any concerns regarding security.  
+
+I Was also responsible for implementing secure firewall policies on the deployment server. To do this I used IPTables to configure a secure firewall that only allowed for secure traffic to our application. 
 
 # Skandha Prakash:
 I am responsible for Backup Data for the Ubuntu 20.04 VM through VPS.net and the backup through Gitlab which can be done on its own.
